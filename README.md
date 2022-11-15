@@ -1,7 +1,7 @@
 # gameDock
 
 Instalación del proyecto
-===============
+-------------
     1. Clonar el repositorio
     2. Desde la terminal (en la caperta del proyecto) ejecutar pip install -r requirements.txt
     3. Descargar postgresql https://www.postgresql.org version 14.6
