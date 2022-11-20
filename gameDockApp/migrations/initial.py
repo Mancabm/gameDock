@@ -1,6 +1,6 @@
 from django.db import migrations, models
 from django.conf import settings
-from gameDockApp.models import Producto, Carrito
+from gameDockApp.models import Producto
 import django.db.models.deletion
 
 class Migration(migrations.Migration):
@@ -25,22 +25,19 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name='Carrito',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('cliente', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-                ('date_creation', models.DateTimeField(auto_now=True)),
-                ('pagado', models.BooleanField())
-            ],
-        ),
-        migrations.CreateModel(
             name='Pedido',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('carrito', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='gameDockApp.Carrito')),
+                ('date_creation', models.DateTimeField(auto_now=True)),
+            ],
+        ),
+        migrations.CreateModel(
+            name='Producto_Pedido',
+            fields=[
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('carrito', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='gameDockApp.Pedido')),
                 ('producto', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='gameDockApp.Producto')),
                 ('cantidad', models.IntegerField(help_text="Cantidad del producto comprado")),
-                ('entregado', models.BooleanField()),
             ],
         ),
     ]

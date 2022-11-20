@@ -19,22 +19,19 @@ class Producto(models.Model):
     def __str__(self) -> str:
         return self.nombre
 
-class Carrito(models.Model):
-    cliente = models.ForeignKey(User, on_delete=models.CASCADE)
+class Pedido(models.Model):
     date_creation = models.DateTimeField(auto_now=True)
-    pagado = models.BooleanField()
+
+    def ID_Seguiment(self)->str:
+        return hash(self.id) + hash(self.date_creation)
 
     def __str__(self) -> str:
         return str(self.cliente)
 
-class Pedido(models.Model):
-    carrito = models.ForeignKey(Carrito, on_delete=models.CASCADE)
+class Producto_Pedido(models.Model):
+    carrito = models.ForeignKey(Pedido, on_delete=models.CASCADE)
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
     cantidad = models.IntegerField(help_text="Cantidad del producto comprado")
-    entregado = models.BooleanField()
-
-    def ID_seguimiento(self) -> str:
-        return hash(self.carrito.date_creation) + hash(self.carrito.cliente.username) + hash(self.producto.nombre)
 
     def __str__(self) -> str:
         return str(self.carrito) + " "+ str(self.producto)
