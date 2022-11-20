@@ -21,6 +21,7 @@ class Migration(migrations.Migration):
                 ('stock', models.IntegerField(help_text='Stock del prodcuto')),
                 ('tipo', models.IntegerField(choices=Producto.TipoProducto.choices, 
                     default=Producto.TipoProducto.JUEGO, null=False)),
+                ('imagen', models.ImageField(upload_to="productos", verbose_name="Imagen"))
             ],
         ),
         migrations.CreateModel(
