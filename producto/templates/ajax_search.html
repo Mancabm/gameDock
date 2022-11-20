@@ -1,0 +1,11 @@
+{% if productos.count > 0 %}
+
+{% for producto in productos %}
+<li><a href="{{ producto.object.get_absolute_url }}">{{ producto.object.nombre }}</a></li>
+{% endfor %}
+
+{% else %}
+
+<li>No se encontraron productos.</li>
+
+{% endif %}
