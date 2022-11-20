@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang='es'>
-
     <title>
         {% block nombrePagina %}{% endblock %}
     </title>
     <head>
         <meta charset='utf-8'>
+        {% load bootstrap5 %}
+        {% bootstrap_css%}
+        
         <style>
             {% block estilos%}{% endblock  %}
-        </style>
-        
-        
+        </style>        
     </head>
     <body>
         <nav>
@@ -22,7 +22,9 @@
                 <dd><a href='/carrito'>Carrito</h3></dd>
             </dl>
         </nav>
-
+        <div>
+            <a href="#" class"btn btn-success"></a>
+        </div>
         {% block contenido %}{% endblock  %}
     </body>
 
