@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang='es'>
-
     <title>
         {% block nombrePagina %}{% endblock %}
     </title>
@@ -8,9 +7,7 @@
         <meta charset='utf-8'>
         <style>
             {% block estilos%}{% endblock  %}
-        </style>
-        
-        
+        </style>        
     </head>
     <body>
         <nav>
@@ -22,7 +19,9 @@
                 <dd><a href='/carrito'>Carrito</h3></dd>
             </dl>
         </nav>
-
+        <div>
+            <a href="#" class"btn btn-success"></a>
+        </div>
         {% block contenido %}{% endblock  %}
     </body>
 
