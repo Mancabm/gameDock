@@ -14,6 +14,7 @@ class Producto(models.Model):
     precio = models.FloatField(help_text="Precio del producto")
     stock = models.IntegerField(help_text="Stock del prodcuto")
     tipo = models.IntegerField(choices=TipoProducto.choices, default=TipoProducto.JUEGO)
+    imagen = models.ImageField(upload_to="productos", verbose_name="Recetas")
 
     def __str__(self) -> str:
         return self.nombre
