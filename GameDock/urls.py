@@ -17,9 +17,11 @@ from django.contrib import admin
 from django.urls import include, path
 from django.conf.urls.static import static
 from django.conf import settings
+from gameDockApp import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
+    path('', views.clientePrincipal),
+    path('products/product/<int:id_producto>', views.product_detail),
     path('search/', include('haystack.urls')),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
