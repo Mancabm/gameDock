@@ -9,5 +9,5 @@ def clientePrincipal(request):
 
 def product_detail(request, id_producto):
     producto = get_object_or_404(Producto, pk=id_producto)
-    return render(request, 'product_detail.html',{'producto': producto, 'MEDIA_URL': settings.MEDIA_URL})
+    return render(request, 'product_detail.html', {'producto': producto, 'MEDIA_URL': settings.MEDIA_URL})
 

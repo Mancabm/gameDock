@@ -26,6 +26,6 @@ urlpatterns = [
 
     path('', views.clientePrincipal),
     
-    path('products/product/<int:id_product>', views.product_detail),
+    path('products/product/<int:id_producto>', views.product_detail),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
