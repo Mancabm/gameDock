@@ -2,7 +2,6 @@ from django.shortcuts import render, get_object_or_404
 from django.conf import settings
 from gameDockApp.models import Producto
 from haystack.query import SearchQuerySet
-from django.shortcuts import render_to_response, render
 
 #muestra los títulos de los productos que están registrados
 def clientePrincipal(request):
