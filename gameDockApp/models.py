@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.auth.hashers import make_password
 from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
@@ -23,10 +24,10 @@ class Pedido(models.Model):
     date_creation = models.DateTimeField(auto_now=True)
 
     def ID_Seguiment(self)->str:
-        return hash(self.id) + hash(self.date_creation)
+        return make_password(str(self.id)) + make_password(str(self.date_creation))
 
     def __str__(self) -> str:
-        return str(self.cliente)
+        return self.ID_Seguiment()
 
 class Producto_Pedido(models.Model):
     carrito = models.ForeignKey(Pedido, on_delete=models.CASCADE)
