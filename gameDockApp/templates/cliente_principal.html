@@ -5,17 +5,23 @@
 {%endblock%}
 
 {% block estilos%}
-
-
-
 {% endblock  %}
 
 
 {% block contenido %}
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">GameDock</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-        </button>
-    </nav>
+{% comment %} falta un if q segun el tipo devuelva productos de tipo 1, 2 o 3 {% endcomment %}
+
+    {% for producto in productos%}
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="col">
+                <div class="card h-100">
+                    <img src="{{MEDIA_URL}}{{producto.imagen}}" class="card-img-top" alt="product_image">
+                    <div class="card-body">
+                        <h5 class = "card-title">{{producto.nombre}}</h5>
+                        <p class = "card-text">Precio: {{producto.precio}}€</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
 {% endblock  %}
