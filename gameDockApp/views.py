@@ -5,4 +5,4 @@ from gameDockApp.models import Producto
 #muestra los títulos de los productos que están registrados
 def clientePrincipal(request):
     productos=Producto.objects.all()
-    return render(request,'clientePrincipal.html', {'productos':productos})
+    return render(request,'cliente_principal.html', {'productos':productos})
