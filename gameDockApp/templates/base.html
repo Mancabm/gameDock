@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang='es'>
-
     <title>
         {% block nombrePagina %}{% endblock %}
     </title>
@@ -11,9 +10,7 @@
         
         <style>
             {% block estilos%}{% endblock  %}
-        </style>
-        
-        
+        </style>        
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -45,7 +42,9 @@
                 </ul>
             </div>
         </nav>
-
+        <div>
+            <a href="#" class"btn btn-success"></a>
+        </div>
         {% block contenido %}{% endblock  %}
     </body>
 
