@@ -6,7 +6,12 @@ from haystack.query import SearchQuerySet
 #muestra los títulos de los productos que están registrados
 def clientePrincipal(request):
     productos=Producto.objects.all()
-    return render(request,'cliente_principal.html', {'productos':productos})
+    return render(request,'cliente_principal.html', {'productos':productos, 'MEDIA_URL': settings.MEDIA_URL})
+
+#muestra los títulos de los productos que están registrados filtrados por tipo
+def productos_filtrados(request, id):
+    productos=Producto.objects.filter(tipo=id)
+    return render(request,'cliente_principal.html', {'productos':productos, 'MEDIA_URL': settings.MEDIA_URL})
 
 def product_detail(request, id_producto):
     producto = get_object_or_404(Producto, pk=id_producto)
