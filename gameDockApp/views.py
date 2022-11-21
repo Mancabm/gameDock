@@ -19,4 +19,4 @@ def product_detail(request, id_producto):
 
 def search_titles(request):
   productos = SearchQuerySet().autocomplete(content_auto = request.POST.get('search_text', ''))
-  return render_to_response('ajax_search.html', {'productos': productos})
+  return render('ajax_search.html', {'productos': productos})

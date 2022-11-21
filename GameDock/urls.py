@@ -23,6 +23,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.clientePrincipal),
     path('producto/<int:id>/', views.productos_filtrados),
-    path('products/product/<int:id_product>', views.product_detail)
+    path('products/product/<int:id_product>', views.product_detail),
     path('search/', include('haystack.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
