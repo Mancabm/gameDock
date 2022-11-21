@@ -24,6 +24,8 @@ urlpatterns = [
 
     path('', views.clientePrincipal),
     path('producto/<int:id>/', views.productos_filtrados),
-    path('products/product/<int:id_product>', views.product_detail)
+    path('products/product/<int:id_product>', views.product_detail),
+
+    path('?busqueda=<str:busqueda>', views.busqueda_producto),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
