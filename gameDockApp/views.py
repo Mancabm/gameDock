@@ -5,6 +5,9 @@ from gameDockApp.models import Producto
 #muestra los títulos de los productos que están registrados
 def clientePrincipal(request):
     productos=Producto.objects.all()
+    busqueda = request.GET.get("busqueda")
+    if busqueda:
+      productos=Producto.objects.filter(nombre__icontains = busqueda)
     return render(request,'cliente_principal.html', {'productos':productos, 'MEDIA_URL': settings.MEDIA_URL})
 
 #muestra los títulos de los productos que están registrados filtrados por tipo
@@ -18,5 +21,5 @@ def product_detail(request, id_producto):
 
 def busqueda_producto(request):
     busqueda = request.GET.get("busqueda")
-    productos=Producto.objects.filter(busqueda in Producto.nombre)
+    productos=Producto.objects.filter(nombre__icontains = busqueda)
     return render(request,'cliente_principal.html', {'productos':productos, 'MEDIA_URL': settings.MEDIA_URL})
