@@ -1,20 +1,30 @@
 {% extends 'base.html' %}
 
 {% block contenido %}
-    <div id='tipo'>
-        <img src="{{MEDIA_URL}}{{receta.imagen}}">
+    <div class="d-flex align-items-center justify-content-center">
+        <div class="card mb-3 shadow-lg p-3 mb-5 bg-body rounded" style="width:60%; height: 40%">
+            <div class="row g-0">
+              <div class="col-md-4">
+                <img src="{{MEDIA_URL}}{{producto.imagen}}" class="img-fluid rounded-start" alt="product_image">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title">{{producto.nombre}}</h5>
+                  <p class="card-text">{{producto.descripcion}}</p>
+                  <p class="card-text"><small class="text-muted">{{producto.precio}}</small></p>
+                  <p class="card-text"><small class="text-muted">{{producto.tipo.value}}</small></p>
+                {% if producto.stock >= 1 %}
+                    <p style="color: green"> En stock</p>
+                    <a href="#" class="btn btn-success"> Añadir a carrito</a>
+                {% else %}
+                    <p style="color: red"> No stock</p>
+                {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
     </div>
-    <div id='nombre'>
-        <h2>Ingredientes</h2>
-        <p>{{receta.ingredientes}}</p>
-    </div>
-    <div id='descripcion'>
-    </div> 
-    <div id='precio'>
-    </div> 
-{% comment %} Hay que hacer el if para comprobar si hay stock {% endcomment %}
-    <div id='stock'>
-    </div>
-    <div id='imagen'>
-    </div>
+
+        
+    
 {% endblock %}
