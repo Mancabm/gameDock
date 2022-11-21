@@ -7,6 +7,9 @@ def clientePrincipal(request):
     productos=Producto.objects.all()
     return render(request,'cliente_principal.html', {'productos':productos})
 
+def tratamiento_datos(request):
+    return render(request,'tratamiento_datos.html')
+
 def product_detail(request, id_producto):
     producto = get_object_or_404(Producto, pk=id_producto)
     return render(request, 'product_detail.html', {'producto': producto, 'MEDIA_URL': settings.MEDIA_URL})

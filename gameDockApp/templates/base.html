@@ -1,32 +1,45 @@
 <!DOCTYPE html>
 <html lang='es'>
-    <title>
-        {% block nombrePagina %}{% endblock %}
-    </title>
-    <head>
-        <meta charset='utf-8'>
-        {% load bootstrap5 %}
-        {% bootstrap_css%}
-        
-        <style>
-            {% block estilos%}{% endblock  %}
-        </style>        
-    </head>
-    <body>
-        <nav>
-            <dl>
-                <dd><a href='/'>Inicio</h3></dd>
-                <dd><a href='/productos?tipo=1'>Juegos</a></dd>
-                <dd><a href='/productos?tipo=2'>Consola</a></dd>
-                <dd><a href='/productos?tipo=3'>Perifericos</a></dd>
-                <dd><a href='/carrito'>Carrito</h3></dd>
-            </dl>
-        </nav>
-        <div>
-            <a href="#" class"btn btn-success"></a>
-        </div>
-        {% block contenido %}{% endblock  %}
-    </body>
+<title>
+  {% block nombrePagina %}{% endblock %}
+</title>
 
+<head>
+  <meta charset='utf-8'>
+  {% load bootstrap5 %}
+  {% bootstrap_css%}
+
+  <style>
+    {
+      % block estilos%
+    }
+
+      {
+      % endblock %
+    }
+  </style>
+</head>
+
+<body>
+  <nav>
+    <dl>
+      <dd><a href='/'>Inicio</h3>
+      </dd>
+      <dd><a href='/productos?tipo=1'>Juegos</a></dd>
+      <dd><a href='/productos?tipo=2'>Consola</a></dd>
+      <dd><a href='/productos?tipo=3'>Perifericos</a></dd>
+      <dd><a href='/carrito'>Carrito</h3>
+      </dd>
+    </dl>
+  </nav>
+  <div>
+    <a href="#" class"btn btn-success"></a>
+  </div>
+  {% block contenido %}{% endblock %}
+</body>
+
+<footer>
+  <a href="/tratamiento_datos">Tratamiento de datos</a>
+</footer>
 
 </html>
