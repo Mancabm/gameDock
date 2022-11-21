@@ -18,8 +18,3 @@ def productos_filtrados(request, id):
 def product_detail(request, id_producto):
     producto = get_object_or_404(Producto, pk=id_producto)
     return render(request, 'product_detail.html',{'producto': producto, 'MEDIA_URL': settings.MEDIA_URL})
-
-def busqueda_producto(request):
-    busqueda = request.GET.get("busqueda")
-    productos=Producto.objects.filter(nombre__icontains = busqueda)
-    return render(request,'cliente_principal.html', {'productos':productos, 'MEDIA_URL': settings.MEDIA_URL})
