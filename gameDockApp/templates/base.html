@@ -13,14 +13,34 @@
         </style>        
     </head>
     <body>
-        <nav>
-            <dl>
-                <dd><a href='/'>Inicio</h3></dd>
-                <dd><a href='/productos?tipo=1'>Juegos</a></dd>
-                <dd><a href='/productos?tipo=2'>Consola</a></dd>
-                <dd><a href='/productos?tipo=3'>Perifericos</a></dd>
-                <dd><a href='/carrito'>Carrito</h3></dd>
-            </dl>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="/">GameDock</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/">Inicio</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/producto/1">Juegos</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/producto/2">Consolas</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/producto/3">Periféricos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/carrito">Carrito</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/perfil">Perfil</a>
+                    </li>
+                </ul>
+            </div>
         </nav>
         <div>
             <a href="#" class"btn btn-success"></a>
