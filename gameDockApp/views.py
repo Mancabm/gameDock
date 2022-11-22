@@ -28,13 +28,13 @@ def eliminar_producto(request, id_producto):
     carrito = Carrito(request)
     producto = Producto.objects.get(id=id_producto)
     carrito.eliminar(producto)
-    return redirect(request, "Home")
+    return redirect("Home")
 
 def decrementar_producto(request, id_producto):
     carrito = Carrito(request)
     producto = Producto.objects.get(id=id_producto)
-    carrito.add(producto)
-    return redirect(request, "Home")
+    carrito.decrementar(producto)
+    return redirect("Home")
 
 def limpiar_carrito(request):
     carrito = Carrito(request)

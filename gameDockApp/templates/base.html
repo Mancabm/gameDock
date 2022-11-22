@@ -71,9 +71,8 @@
                         <td>{{value.nombre}}</td>
                         <td>{{value.precio}}</td>
                         <td>{{value.cantidad}}
-                            <p>{{value.producto_id}}</p>
-                            <a href="#" class="badge btn-dark badge-dark">+</a>
-                            <a href="#"  class="badge btn-dark badge-dark">-</a>
+¡                           <a href="{% url 'Add' value.id_producto %}" class="badge btn-dark badge-dark">+</a>
+                            <a href="{% url 'Dec' value.id_producto %}"  class="badge btn-dark badge-dark">-</a>
                         </td>
                     </tr>
                     {% endfor %}
