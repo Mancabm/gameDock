@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
+import hashlib
 from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
@@ -24,7 +25,7 @@ class Pedido(models.Model):
     date_creation = models.DateTimeField(auto_now=True)
 
     def ID_Seguiment(self)->str:
-        return make_password(str(self.id)) + make_password(str(self.date_creation))
+        return hashlib.sha256(str(self.id).encode('utf-8')).hexdigest()
 
     def __str__(self) -> str:
         return self.ID_Seguiment()
