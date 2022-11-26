@@ -19,11 +19,12 @@ from django.conf.urls.static import static
 from django.conf import settings
 from gameDockApp import views
 
-from gameDockApp import views
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.clientePrincipal),
+
     path('products/product/<int:id_producto>', views.product_detail),
     path('tratamiento_datos/', views.tratamiento_datos),
+    path('producto/<int:id>/', views.productos_filtrados),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
