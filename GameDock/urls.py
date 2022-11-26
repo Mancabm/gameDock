@@ -21,9 +21,10 @@ from gameDockApp import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-
     path('', views.clientePrincipal),
+
+    path('products/product/<int:id_producto>', views.product_detail),
+    path('tratamiento_datos/', views.tratamiento_datos),
     path('producto/<int:id>/', views.productos_filtrados),
-    path('products/product/<int:id_product>', views.product_detail)
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
