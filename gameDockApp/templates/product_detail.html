@@ -15,7 +15,7 @@
                   <p class="card-text"><small class="text-muted">{{producto.tipo.value}}</small></p>
                 {% if producto.stock >= 1 %}
                     <p style="color: green"> En stock</p>
-                    <a href="#" class="btn btn-success"> Añadir a carrito</a>
+                    <a href="{% url 'Add' producto.id %}" class="btn btn-success"> Añadir a carrito</a>
                 {% else %}
                     <p style="color: red"> No stock</p>
                 {% endif %}

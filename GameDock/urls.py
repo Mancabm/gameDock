@@ -21,12 +21,17 @@ from gameDockApp import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.clientePrincipal),
+    path('', views.clientePrincipal, name='Home'),
 
     path('products/product/<int:id_producto>', views.product_detail),
     path('tratamiento_datos/', views.tratamiento_datos),
     path('producto/<int:id>/', views.productos_filtrados),
-    path('products/product/<int:id_product>', views.product_detail),
+    path('products/product/<int:id_producto>', views.product_detail, name='Prod'),
+    path('limpiar/', views.limpiar_carrito, name='Clear'),
+    path('agregar/<int:id_producto>', views.agregar_producto, name='Add'),
+    path('decrementar/<int:id_producto>', views.decrementar_producto, name='Dec'),
+
+
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
