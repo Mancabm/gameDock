@@ -31,7 +31,7 @@ urlpatterns = [
     path('agregar/<int:id_producto>', views.agregar_producto, name='Add'),
     path('decrementar/<int:id_producto>', views.decrementar_producto, name='Dec'),
 
-,
+
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
