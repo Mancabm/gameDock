@@ -19,6 +19,9 @@ def productos_filtrados(request, id):
 def tratamiento_datos(request):
     return render(request,'tratamiento_datos.html')
 
+def pedidos(request):
+  return render(request, 'pedidos.html')
+
 def product_detail(request, id_producto):
     producto = get_object_or_404(Producto, pk=id_producto)
     return render(request, 'product_detail.html',{'producto': producto, 'MEDIA_URL': settings.MEDIA_URL})
