@@ -6,7 +6,7 @@
     <head>
         <meta charset='utf-8'>
         {% load bootstrap5 %}
-        {% bootstrap_css %}
+        {% bootstrap_css%}
         
         <style>
             {% block estilos%}{% endblock  %}
@@ -38,6 +38,12 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/perfil">Perfil</a>
+                    </li>
+                    <li>
+                      <form method="get">
+                        <input type="text" placeholder="Search..." name="busqueda">
+                        <button type="submit">Ok</button>
+                      </form>
                     </li>
                 </ul>
             </div>
@@ -100,5 +106,10 @@
         </div>
     
     </body>
+    <footer>
+      <a href="/tratamiento_datos">Tratamiento de datos</a>
+    </footer>
+    
+
 
 </html>
