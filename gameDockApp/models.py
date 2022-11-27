@@ -23,6 +23,7 @@ class Producto(models.Model):
 
 class Pedido(models.Model):
     date_creation = models.DateTimeField(auto_now=True)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
     def ID_Seguiment(self)->str:
         return hashlib.sha256(str(self.id).encode('utf-8')).hexdigest()
@@ -30,10 +31,12 @@ class Pedido(models.Model):
     def __str__(self) -> str:
         return self.ID_Seguiment()
 
+
 class Producto_Pedido(models.Model):
     carrito = models.ForeignKey(Pedido, on_delete=models.CASCADE)
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
     cantidad = models.IntegerField(help_text="Cantidad del producto comprado")
+
 
     def __str__(self) -> str:
         return str(self.carrito) + " "+ str(self.producto)
