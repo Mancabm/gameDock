@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang='es'>
+    <title>Registrar</title>
+    <head>
+        <meta charset='utf-8'>
+        {% load bootstrap5 %}
+        {% bootstrap_css %}
+    </head>
+    <body>
+        {% if messages %}
+            <div class="alert alert-danger" role="alert">
+                {% for message in messages %}
+                    <p> {{message}} </p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <div class="">
+            <form method="POST" action=''>
+                {% csrf_token %}
+                <table>{{formulario}}</table>
+                <button type="submit" class='btn btn-primary'>Registrar</button>
+            </form>
+        </div>
+    </body>
+</html>

@@ -32,6 +32,10 @@ urlpatterns = [
     path('decrementar/<int:id_producto>', views.decrementar_producto, name='Dec'),
     path('pedidos/new', views.crear_nuevo_pedido, name='Init_Process'),
     path('pedidos/<int:id_pedido>', views.elegir_metodo_pago, name='Process'),
+    path('login', views.log_in),
+    path('logout', views.log_out),
+    path('register', views.register)
+
 
 
 
