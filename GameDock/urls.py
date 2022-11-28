@@ -30,6 +30,9 @@ urlpatterns = [
     path('limpiar/', views.limpiar_carrito, name='Clear'),
     path('agregar/<int:id_producto>', views.agregar_producto, name='Add'),
     path('decrementar/<int:id_producto>', views.decrementar_producto, name='Dec'),
+    path('login', views.log_in),
+    path('logout', views.log_out),
+    path('register', views.register)
 
 
 

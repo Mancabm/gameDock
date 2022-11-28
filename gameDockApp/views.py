@@ -2,6 +2,11 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.conf import settings
 from gameDockApp.models import Producto
 from gameDockApp.carrito import Carrito
+from gameDockApp.forms import RegisterForm
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 #muestra los títulos de los productos que están registrados
 def clientePrincipal(request):
@@ -45,4 +50,44 @@ def decrementar_producto(request, id_producto):
 def limpiar_carrito(request):
     carrito = Carrito(request)
     carrito.limpiar()
+    return redirect("Home")
+
+def register(request):
+    if request.method == 'POST':
+        formulario = RegisterForm(request.POST)
+        if formulario.is_valid:
+            usuario = formulario.save()
+            login(request, usuario)
+            return redirect("Home")
+        else:
+            mess = messages.add_message(request, level=0, message='Información inválida')
+            return render(request, 'register.html', {'formulario': formulario, 'messages':mess})
+    elif request.user.is_authenticated:
+        return redirect("Home")
+    else:
+        formulario = RegisterForm()
+    return render(request, 'register.html', {'formulario': formulario})
+
+def log_in(request):
+    if request.method == 'POST':
+        formulario = AuthenticationForm(request.POST)
+        if formulario.is_valid:
+            usuario = request.POST['username']
+            password = request.POST['password']
+            access = authenticate(username=usuario, password=password)
+            if access is not None:
+                login(request, access)
+                return redirect("Home")
+            else:
+                mess = messages.add_message(request, message='Credenciales no válidos', level=0)
+                return render(request, 'login.html', {'formulario': formulario, 'messsages': mess})
+    elif request.user.is_authenticated:
+        return redirect("Home")
+    else:
+        formulario = AuthenticationForm()
+    return render(request, 'login.html', {'formulario': formulario})
+
+@login_required(login_url="/login")
+def log_out(request):
+    logout(request)
     return redirect("Home")
