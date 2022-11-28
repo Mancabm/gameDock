@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.conf import settings
-from gameDockApp.models import Producto
+from gameDockApp.models import Pedido, Producto
 from gameDockApp.carrito import Carrito
 
 #muestra los títulos de los productos que están registrados
@@ -53,6 +53,6 @@ def limpiar_carrito(request):
 def seguimiento_pedido(request):
   pedidos = []
   busqueda = request.GET.get("busqueda")
-    if busqueda:
-      pedidos = Pedido.objects.filter(id_pedido__icontains = busqueda)
+  if busqueda:
+    pedidos = Pedido.objects.filter(id_pedido__icontains = busqueda)
   return render(request,'pedidos.html', {'pedidos':pedidos})
