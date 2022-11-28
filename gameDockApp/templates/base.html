@@ -54,6 +54,13 @@
                         <button type="submit">Ok</button>
                       </form>
                     </li>
+                    {% if user.is_superuser %}
+                        <li>    
+                            <form action="/admin">
+                                <input type="submit" value="Gestión de administración"/>
+                            </form>
+                        </li>
+                    {% endif %}
                 </ul>
             </div>
         </nav>
