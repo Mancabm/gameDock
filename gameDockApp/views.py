@@ -1,7 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.conf import settings
 from gameDockApp.models import Producto
+from gameDockApp.models import Pedido
+from gameDockApp.models import Producto_Pedido
 from gameDockApp.carrito import Carrito
+from django.contrib.auth.models import User
 
 #muestra los títulos de los productos que están registrados
 def clientePrincipal(request):
@@ -46,3 +49,22 @@ def limpiar_carrito(request):
     carrito = Carrito(request)
     carrito.limpiar()
     return redirect("Home")
+
+def elegir_metodo_pago(request):
+    total = 0
+    usuario = request.user
+    if usuario:
+        pedido = Pedido(usuario=usuario)
+    else:
+        pedido = Pedido()
+    pedido.save()
+    carrito = Carrito(request)
+    for key, value in carrito.carrito.items():
+        id_producto = value.get("id_producto")
+        producto = get_object_or_404(Producto, pk=id_producto)
+        nuevo_producto_pedido = Producto_Pedido(carrito=pedido, producto=producto, cantidad=value.get("cantidad"))
+        nuevo_producto_pedido.save()
+        total += value.get('precio') * value.get('cantidad')
+    datos_pedido = Producto_Pedido.objects.filter(carrito=pedido)
+    return render(request, 'tramitar_pedido.html', {'pedido': pedido, 'total': total,'datos_pedido': datos_pedido, 'MEDIA_URL': settings.MEDIA_URL})
+    
