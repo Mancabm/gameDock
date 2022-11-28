@@ -56,7 +56,11 @@ def register(request):
     if request.method == 'POST':
         formulario = RegisterForm(request.POST)
         if formulario.is_valid:
-            usuario = formulario.save()
+            try:
+                usuario = formulario.save()
+            except:
+                mess = messages.add_message(request, level=0, message='Información inválida')
+                return render(request, 'register.html', {'formulario': formulario, 'messages':mess})
             login(request, usuario)
             return redirect("Home")
         else:
