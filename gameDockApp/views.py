@@ -49,3 +49,10 @@ def limpiar_carrito(request):
     carrito = Carrito(request)
     carrito.limpiar()
     return redirect("Home")
+
+def seguimiento_pedido(request):
+  pedidos = []
+  busqueda = request.GET.get("busqueda")
+    if busqueda:
+      pedidos = Pedido.objects.filter(id_pedido__icontains = busqueda)
+  return render(request,'pedidos.html', {'pedidos':pedidos})
