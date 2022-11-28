@@ -57,7 +57,7 @@ def limpiar_carrito(request):
 
 def seguimiento_pedido(request):
   pedidos = []
-  busqueda = request.GET.get("busqueda")
+  busqueda = request.GET.get("id-pedido")
   if busqueda:
     pedidos = Pedido.objects.filter(id_pedido__icontains = busqueda)
   return render(request,'pedidos.html', {'pedidos':pedidos})
