@@ -50,7 +50,7 @@ def limpiar_carrito(request):
     carrito.limpiar()
     return redirect("Home")
 
-def elegir_metodo_pago(request):
+def crear_nuevo_pedido(request):
     total = 0
     usuario = request.user
     if usuario:
@@ -65,6 +65,14 @@ def elegir_metodo_pago(request):
         nuevo_producto_pedido = Producto_Pedido(carrito=pedido, producto=producto, cantidad=value.get("cantidad"))
         nuevo_producto_pedido.save()
         total += value.get('precio') * value.get('cantidad')
-    datos_pedido = Producto_Pedido.objects.filter(carrito=pedido)
-    return render(request, 'tramitar_pedido.html', {'pedido': pedido, 'total': total,'datos_pedido': datos_pedido, 'MEDIA_URL': settings.MEDIA_URL})
     
+    return redirect("/pedidos/{}".format(pedido.id))
+
+def elegir_metodo_pago(request, id_pedido):
+    total = 0
+    pedido = get_object_or_404(Pedido, pk=id_pedido)
+    datos_pedido = Producto_Pedido.objects.filter(carrito=pedido)
+    for d in datos_pedido:
+        total += d.producto.precio * d.cantidad
+    
+    return render(request, 'tramitar_pedido.html', {'datos_pedido': datos_pedido, 'pedido': pedido, 'total': total,'MEDIA_URL': settings.MEDIA_URL})
