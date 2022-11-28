@@ -1,0 +1,62 @@
+[
+    {
+        "model": "gameDockApp.producto",
+        "pk": 1,
+        "fields":{
+            "nombre": "Nintendo Switch",
+            "descripcion": "La última consola de Nintendo",
+            "precio": "259.99",
+            "tipo": "2",
+            "stock": "3",
+            "imagen": "productos/Switch.png"
+        }
+    },
+    {
+        "model": "gameDockApp.producto",
+        "pk": 2,
+        "fields":{
+            "nombre": "AI The Somnium Files: The Nirvana Initiative",
+            "descripcion": "La secuela de AI The Somnium Files",
+            "precio": "60.00",
+            "tipo": "1",
+            "stock": "60",
+            "imagen": "productos/AI_Nirvana.jpg"
+        }
+    },
+    {
+        "model": "gameDockApp.producto",
+        "pk": 3,
+        "fields":{
+            "nombre": "Par de joycons para Switch",
+            "descripcion": "Un par de joycons para switch: incluye cinta de seguridad",
+            "precio": "80.00",
+            "tipo": "3",
+            "stock": "100",
+            "imagen": "productos/joycons.jpg"
+        }
+    },
+    {
+        "model":"gameDockApp.producto",
+        "pk": 4,
+        "fields":{
+            "nombre": "Final Fantasy XIV: Endwalker",
+            "descripcion": "La última expansión de FFXIV (incluye todas las anteriores)",
+            "precio": "60.00",
+            "tipo": "1",
+            "stock": "100",
+            "imagen": "productos/final-fantasy-xiv-endwalker-ps4.jpg"            
+        }
+    },
+    {
+        "model":"gameDockApp.producto",
+        "pk":5,
+        "fields":{
+            "nombre": "Code Vein",
+            "descripcion": "Crea tu propio resucitado, forma un equipo y embárcate en un viaje hasta el fin del mundo para descubrir tu pasado y escapar de tu vida de pesadilla en CODE VEIN.",
+            "precio": "49.99",
+            "tipo": "1",
+            "stock": "80",
+            "imagen": "productos/codeVein.jpg"
+        }
+    }
+]
