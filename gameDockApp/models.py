@@ -35,5 +35,14 @@ class Producto_Pedido(models.Model):
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
     cantidad = models.IntegerField(help_text="Cantidad del producto comprado")
 
+    @classmethod
+    def create(cls, id_pedido, datos):
+        carrito = id_pedido
+        producto = datos.get("id_producto")
+        cantidad = datos.get("cantidad")
+        """ añadir atributo¿? -> 
+            total = datos.get("precio") * cantidad  """
+        return cls(carrito, producto, cantidad)
+
     def __str__(self) -> str:
         return str(self.carrito) + " "+ str(self.producto)

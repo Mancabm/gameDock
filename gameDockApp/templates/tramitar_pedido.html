@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% comment %} 
+    Form con:
+    -Nombre y apellidos
+    -Dirección de envío
+    -Método de pago
+    -Display de los productos, cantidad, total
+    -Botón de compra
+
+    Siguiente vista contrarreembolso:
+    -Pedido realizado :D
+    -Datos del envio (productos, cant, precio, codigo de seguimiento)
+{% endcomment %}
+{% block contenido %}
+    <div class="d-flex align-items-center justify-content-center">
+        <div>
+            {{pedido.ID_Seguiment}}
+        </div>
+        <div>
+            {{total}}
+        </div>
+    </div>
+    {% for dato in datos_pedido %}
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="col">
+                <div class="card h-100">
+                    <img src="{{MEDIA_URL}}{{dato.producto.imagen}}" class="card-img-top" alt="product_image">
+                    <div class="card-body">
+                        <h5 class = "card-title">{{dato.producto.nombre}}</h5>
+                        <p class = "card-text">x{{dato.cantidad}}</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    <p class = "card-text">Total: {{total}}€</p>
+    
+{% endblock %}
+
