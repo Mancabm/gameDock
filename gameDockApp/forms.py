@@ -23,18 +23,10 @@ class RegisterForm(UserCreationForm):
 
 class PedidoForm(forms.Form):
     nombre = forms.CharField(max_length=150, required=True)
+    direccion = forms.CharField(max_length=200, required=True)
     codigo_postal = forms.CharField(max_length=100, required=True)
     email = forms.EmailField(required=True)
 
     class Meta:
         model = Pedido
-        fields = ("nombre", "codigo_postal", "email")
-    
-    def get_clean_nombre(self):
-        return self.cleaned_data['nombre']
-
-    def get_clean_codigo_postal(self):
-        return  self.cleaned_data['codigo_postal']
-        
-    def get_clean_email(self):
-        return self.cleaned_data['email']
+        fields = ("nombre", "direccion", "codigo_postal", "email")

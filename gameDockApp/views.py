@@ -91,6 +91,8 @@ def crear_pedido(request, formulario):
     pedido.nombre =  formulario['nombre'].value()
     pedido.codigo_postal = formulario['codigo_postal'].value()
     pedido.email =  formulario['email'].value()
+    pedido.direccion = formulario['direccion'].value()
+    pedido.estado_pedido = pedido.EstadoPedido.EN_TIENDA
     pedido.save()
     carrito = Carrito(request)
     for key, value in carrito.carrito.items():
