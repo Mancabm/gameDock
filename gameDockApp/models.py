@@ -22,11 +22,17 @@ class Producto(models.Model):
         return self.nombre
 
 class Pedido(models.Model):
+    class EstadoPedido(models.IntegerChoices):
+        EN_TIENDA = 0, _('En Tienda')
+        EN_REPARTO = 1, _('En Reparto')
+        ENVIADO = 2, _('Enviado')
     date_creation = models.DateTimeField(auto_now=True)
     usuario = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     nombre = models.CharField(max_length=150)
     codigo_postal = models.CharField(max_length=100)
+    direccion = models.TextField()
     email = models.EmailField()
+    estado_pedido = models.IntegerField(choices=EstadoPedido.choices, default=EstadoPedido.EN_TIENDA)
 
     def ID_Seguiment(self)->str:
         return hashlib.sha256(str(self.id).encode('utf-8')).hexdigest()
