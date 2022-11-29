@@ -31,10 +31,16 @@ def tratamiento_datos(request):
 def pedidos(request):
   return render(request, 'pedidos.html')
 
+def pedido_filtrado(request):
+  id_pedido = request.GET.get('id-pedido')
+  if(id_pedido):
+    pedido = Pedido.objects.filter(id_pedido__icontains = id_pedido)
+    id_pedido = pedido.__str__
+  return redirect('/pedidos/' + id_pedido)
+
 def product_detail(request, id_producto):
     producto = get_object_or_404(Producto, pk=id_producto)
     return render(request, 'product_detail.html',{'producto': producto, 'MEDIA_URL': settings.MEDIA_URL})
-
 
 def agregar_producto(request, id_producto):
     carrito = Carrito(request)
