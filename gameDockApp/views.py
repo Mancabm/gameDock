@@ -1,8 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.conf import settings
 from gameDockApp.models import Producto
+from gameDockApp.models import Pedido
+from gameDockApp.models import Producto_Pedido
 from gameDockApp.carrito import Carrito
+from django.contrib.auth.models import User
 from gameDockApp.forms import RegisterForm
+from gameDockApp.forms import PedidoForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
@@ -52,6 +56,50 @@ def limpiar_carrito(request):
     carrito.limpiar()
     return redirect("Home")
 
+def elegir_metodo_pago(request, id_pedido):
+    total = 0
+    pedido = get_object_or_404(Pedido, pk=id_pedido)
+    datos_pedido = Producto_Pedido.objects.filter(pedido=pedido)
+    for d in datos_pedido:
+        total += d.producto.precio * d.cantidad
+    
+    return render(request, 'tramitar_pedido.html', {'datos_pedido': datos_pedido, 'pedido': pedido, 'total': total,'MEDIA_URL': settings.MEDIA_URL})
+
+def crear_nuevo_pedido(request):
+    if request.method == 'POST':
+        formulario = PedidoForm(request.POST)
+        if formulario.is_valid:
+            try:
+                pedido = crear_pedido(request, formulario)
+            except:
+                mess = messages.add_message(request, level=0, message='Información inválida')
+                return render(request, 'pedido_form.html', {'formulario': formulario, 'messages':mess}) 
+            return redirect('/pedidos/{}'.format(pedido.id))
+        else:
+            mess = messages.add_message(request, level=0, message='Información inválida')
+            return render(request, 'pedido_form.html', {'formulario': formulario, 'messages':mess})
+    else:
+        formulario = PedidoForm()
+    return render(request, 'pedido_form.html', {'formulario': formulario})
+
+def crear_pedido(request, formulario):
+    usuario = request.user
+    if usuario.is_authenticated:
+        pedido = Pedido(usuario=usuario)
+    else:
+        pedido = Pedido()
+    pedido.nombre =  formulario['nombre'].value()
+    pedido.codigo_postal = formulario['codigo_postal'].value()
+    pedido.email =  formulario['email'].value()
+    pedido.save()
+    carrito = Carrito(request)
+    for key, value in carrito.carrito.items():
+        id_producto = value.get("id_producto")
+        producto = get_object_or_404(Producto, pk=id_producto)
+        nuevo_producto_pedido = Producto_Pedido(pedido=pedido, producto=producto, cantidad=value.get("cantidad"))
+        nuevo_producto_pedido.save()
+    return pedido
+
 def register(request):
     if request.method == 'POST':
         formulario = RegisterForm(request.POST)
@@ -95,3 +143,5 @@ def log_in(request):
 def log_out(request):
     logout(request)
     return redirect("Home")
+
+
