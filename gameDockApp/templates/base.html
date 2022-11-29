@@ -45,12 +45,18 @@
         <li class="nav-item">
           <a class="nav-link" href="/carrito">Carrito</a>
         </li>
+        {% if not user.is_authenticated %}
         <li class="nav-item">
-          <a class="nav-link" href="/perfil">Perfil</a>
+          <a class="nav-link" href="/login">Inicia Sesión</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/pedidos">Pedidos</a>
+          <a class="nav-link" href="/register">Registrarse</a>
         </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">Cerrar Sesión</a>
+        </li>
+        {% endif %}
         <li>
           <form method="get">
             <input type="text" placeholder="Search..." name="busqueda">
@@ -113,6 +119,10 @@
 
 
     </div>
+  </div>
+
+
+  </div>
 
   </div>
   </div>

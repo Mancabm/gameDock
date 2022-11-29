@@ -1,8 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.conf import settings
 from gameDockApp.models import Pedido, Producto
+from gameDockApp.models import Pedido
+from gameDockApp.models import Producto_Pedido
 from gameDockApp.carrito import Carrito
+from django.contrib.auth.models import User
 from gameDockApp.forms import RegisterForm
+from gameDockApp.forms import PedidoForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
@@ -55,13 +59,6 @@ def limpiar_carrito(request):
     carrito.limpiar()
     return redirect("Home")
 
-def seguimiento_pedido(request):
-  pedidos = []
-  busqueda = request.GET.get("id-pedido")
-  if busqueda:
-    pedidos = Pedido.objects.filter(id_pedido__icontains = busqueda)
-  return render(request,'pedidos.html', {'pedidos':pedidos})
-
 def register(request):
     if request.method == 'POST':
         formulario = RegisterForm(request.POST)
@@ -105,3 +102,5 @@ def log_in(request):
 def log_out(request):
     logout(request)
     return redirect("Home")
+
+

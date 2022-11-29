@@ -25,7 +25,7 @@ class Pedido(models.Model):
     date_creation = models.DateTimeField(auto_now=True)
     usuario = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     nombre = models.CharField(max_length=150)
-    codigo_postal = models.CharField(max_length=30)
+    codigo_postal = models.CharField(max_length=100)
     email = models.EmailField()
 
     def ID_Seguiment(self)->str:
