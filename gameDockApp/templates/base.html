@@ -33,9 +33,6 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="/producto/3">Periféricos</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/carrito">Carrito</a>
-                    </li>
                     {% if not user.is_authenticated %}
                         <li class="nav-item">
                             <a class="nav-link" href="/login">Inicia Sesión</a>
@@ -54,6 +51,13 @@
                         <button type="submit">Ok</button>
                       </form>
                     </li>
+                    {% if user.is_superuser %}
+                        <li>    
+                            <form action="/admin">
+                                <input type="submit" value="Gestión de administración"/>
+                            </form>
+                        </li>
+                    {% endif %}
                 </ul>
             </div>
         </nav>
