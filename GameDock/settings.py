@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
+import braintree
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -134,3 +135,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 MEDIA_URL = '/media/'
+
+#Braintree settings
+
+BRAINTREE_MERCHANT_ID = 'z77j3wt48srmvcgp'
+BRAINTREE_PUBLIC_KEY = 'd434n6k7z9cf5rx5'
+BRAINTREE_PRIVATE_KEY = '2a935f3ebec4a45890506490bf1f6cae'
+
+BRAINTREE_CONF = {
+  braintree.Environment.Sandbox,
+  BRAINTREE_MERCHANT_ID,
+  BRAINTREE_PUBLIC_KEY,
+  BRAINTREE_PRIVATE_KEY
+}
