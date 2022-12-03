@@ -11,7 +11,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.urls import reverse
 
 #muestra los títulos de los productos que están registrados
 def clientePrincipal(request):
@@ -74,7 +73,7 @@ def crear_nuevo_pedido(request):
                 pedido = crear_pedido(request, formulario)
             except:
                 mess = messages.add_message(request, level=0, message='Información inválida')
-                return render(request, 'pedido_form.html', {'formulario': formulario, 'messages':mess}) 
+                return render(request, 'pedido_form.html', {'formulario': formulario, 'messages':mess})
             return redirect('/pedidos/{}'.format(pedido.id))
         else:
             mess = messages.add_message(request, level=0, message='Información inválida')

@@ -1,37 +1,27 @@
 {% extends 'base.html' %}
-{% comment %} 
-    Form con:
-    -Nombre y apellidos
-    -Dirección de envío
-    -Método de pago
-    -Display de los productos, cantidad, total
-    -Botón de compra
 
-    Siguiente vista contrarreembolso:
-    -Pedido realizado :D
-    -Datos del envio (productos, cant, precio, codigo de seguimiento)
-{% endcomment %}
 {% block contenido %}
-    <div class="d-flex align-items-center justify-content-center">
-        <div>
-            {{pedido.ID_Seguiment}}
-        </div>
-    </div>
-    {% for dato in datos_pedido %}
-        <div class="row row-cols-5 row-cols-md-3 g-4">
-            <div class="col">
-                <div class="card h-100">
-                    <img src="{{MEDIA_URL}}{{dato.producto.imagen}}" class="card-img-top" alt="product_image">
+    <div class"col-md-5">
+        {% for dato in datos_pedido %}
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row no-gutters">
+                <div class="col-md-4">
+                    <img src="{{MEDIA_URL}}{{dato.producto.imagen}}" class="card-img" alt="product_img">
+                </div>
+                <div class="col-md-8">
                     <div class="card-body">
-                        <h5 class = "card-title">{{dato.producto.nombre}}</h5>
-                        <p class = "card-text">x{{dato.cantidad}}</p>
-                        <p class = "card-text">{{dato.producto.precio}}</p>
+                    <h5 class="card-title">{{dato.producto.nombre}}</h5>
+                    <p class="card-text">x{{dato.cantidad}}</p>
+                    <p class="card-text"><small class="text-muted">{{dato.producto.precio}}€</small></p>
                     </div>
                 </div>
+                </div>
             </div>
-        </div>
-    {% endfor %}
-    <p class = "card-text">Total: {{total}}€</p>
-    
+        {% endfor %}
+            <b class = "card-text">Total: {{total}}€</b>
+            <h5 class = "card-text">MÉTODO DE PAGO:</h5>
+            <a href="#" class="btn btn-primary card-text">Contrarreembolso</a>
+            <a href="#" class="btn btn-primary card-text">Pago online</a>
+    </div>
 {% endblock %}
 
