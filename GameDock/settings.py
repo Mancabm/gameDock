@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'gameDockApp',
-    'bootstrap5'
+    'bootstrap5',
+    'payment.apps.PaymentConfig',
 ]
 
 MIDDLEWARE = [
