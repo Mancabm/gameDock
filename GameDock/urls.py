@@ -34,7 +34,8 @@ urlpatterns = [
     path('pedidos/<int:id_pedido>', views.elegir_metodo_pago, name='DetallePedido'),
     path('login', views.log_in),
     path('logout', views.log_out),
-    path('register', views.register)
+    path('register', views.register),
+    path('politica_envio', views.politica_envio)
 
 
 
