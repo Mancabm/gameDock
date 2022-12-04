@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.conf import settings
-from gameDockApp.models import Producto
+from gameDockApp.models import Pedido, Producto
 from gameDockApp.models import Pedido
 from gameDockApp.models import Producto_Pedido
 from gameDockApp.carrito import Carrito
@@ -28,10 +28,18 @@ def productos_filtrados(request, id):
 def tratamiento_datos(request):
     return render(request,'tratamiento_datos.html')
 
+def pedidos(request):
+  pedidos = Pedido.objects.all()
+  pedido = None
+  id_pedido = int(request.GET.get('id-pedido'))
+  if id_pedido:
+    pedido = [p for p in pedidos if p.pk == id_pedido][0]
+    return elegir_metodo_pago(request, pedido.pk)
+  return render(request, 'pedidos.html')
+
 def product_detail(request, id_producto):
     producto = get_object_or_404(Producto, pk=id_producto)
     return render(request, 'product_detail.html',{'producto': producto, 'MEDIA_URL': settings.MEDIA_URL})
-
 
 def agregar_producto(request, id_producto):
     carrito = Carrito(request)
