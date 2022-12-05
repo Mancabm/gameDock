@@ -155,3 +155,5 @@ def log_out(request):
     return redirect("Home")
 
 
+def politica_envio(request):
+    return render(request, "politica_envio.html")
