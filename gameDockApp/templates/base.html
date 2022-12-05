@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang='es'>
+
     <title>
         {% block nombrePagina %}{% endblock %}
     </title>
@@ -9,6 +10,9 @@
         {% bootstrap_css%}
         
         <style>
+            footer {
+                background: #212529;
+            }
             {% block estilos%}{% endblock  %}
         </style>        
     </head>
@@ -65,68 +69,140 @@
             <a href="#" class"btn btn-success"></a>
         </div>
 
-        <div class="container">
-        <div class="row">
-            <div class="col-9">
-            {% block contenido %}{% endblock  %}
-            </div>
-            
-            <div class="col-3 shadow-lg p-3 mb-5 bg-white rounded">
-                <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th scope="row" colspan="3" class="textcenter">Carromato</th>
-                </tr>
-                <tr>
-                    <th scope="col">Producto</th>
-                    <th scope="col">Precio</th>
-                    <th scope="col">Cantidad</th>
-                </tr>
-                </thead>
-                <tbody>
-                    {% if request.session.carrito.items %}
-                    {% for key, value in request.session.carrito.items %}
-                    <tr>
-                        <td>{{value.nombre}}</td>
-                        <td>{{value.precio}}</td>
-                        <td>{{value.cantidad}}
-¡                           <a href="{% url 'Add' value.id_producto %}" class="badge btn-dark badge-dark">+</a>
-                            <a href="{% url 'Dec' value.id_producto %}"  class="badge btn-dark badge-dark">-</a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                    {% else %}
-                    <tr>
-                        <td colspan="3">
-                            <div class="alert text-center">El carrito esta vacio</div>
-                        </td>
-                    </tr>
-                    {% endif %}
-                    <tr>
-                        <th class="row" colspan="3">Total: </th>
-                        <td colspan="3">{{total_carrito}} €</td>
-                    </tr>
+<head>
+  <meta charset='utf-8'>
+  {% load bootstrap5 %}
+  {% bootstrap_css%}
 
-                </tbody>
-        
-                </table>
-                <div class="justify-content-around">
-                    <div class="row"><a href="{% url 'Clear' %}" class="btn btn-primary border">Limpiar</a></div>
-                    <div class="row"><a href="{% url 'Init_Process' %}" class="btn btn-primary border">Procesar pedido</a></div>
-                </div>
-            </div>
+  <style>
+    {
+      % block estilos%
+    }
+
+      {
+      % endblock %
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/">GameDock</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="/">Inicio</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="/producto/1">Juegos</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="/producto/2">Consolas</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="/producto/3">Periféricos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/carrito">Carrito</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/pedidos">Pedidos</a>
+        </li>
+        {% if not user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link" href="/login">Inicia Sesión</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/register">Registrarse</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">Cerrar Sesión</a>
+        </li>
+        {% endif %}
+        <li>
+          <form method="get">
+            <input type="text" placeholder="Search..." name="busqueda">
+            <button type="submit">Ok</button>
+          </form>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div>
+    <a href="#" class"btn btn-success"></a>
+  </div>
 
 
+  <div class="container">
+    <div class="row">
+      <div class="col-9">
+        {% block contenido %}{% endblock %}
+      </div>
+      <div class="col-3 shadow-lg p-3 mb-5 bg-white rounded">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="row" colspan="3" class="textcenter">Carromato</th>
+            </tr>
+            <tr>
+              <th scope="col">Producto</th>
+              <th scope="col">Precio</th>
+              <th scope="col">Cantidad</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% if request.session.carrito.items %}
+            {% for key, value in request.session.carrito.items %}
+            <tr>
+              <td>{{value.nombre}}</td>
+              <td>{{value.precio}}</td>
+              <td>{{value.cantidad}}
+                ¡ <a href="{% url 'Add' value.id_producto %}" class="badge btn-dark badge-dark">+</a>
+                <a href="{% url 'Dec' value.id_producto %}" class="badge btn-dark badge-dark">-</a>
+              </td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+              <td colspan="3">
+                <div class="alert text-center">El carrito esta vacio</div>
+              </td>
+            </tr>
+            {% endif %}
+            <tr>
+              <th class="row" colspan="3">Total: </th>
+              <td colspan="3">{{total_carrito}} €</td>
+            </tr>
+
+          </tbody>
+
+        </table>
+        <div class="justify-content-around">
+          <div class="row"><a href="{% url 'Clear' %}" class="btn btn-primary border">Limpiar</a></div>
+          <div class="row"><a href="{% url 'Init_Process' %}" class="btn btn-primary border">Procesar pedido</a></div>
         </div>
 
-        </div>
         </div>
     
     </body>
-    <footer>
-      <a href="/tratamiento_datos">Tratamiento de datos</a>
+    <footer class="w-100 py-4 flex-shrink-0">
+        <div class="container py-4">
+            <div class="row gy-4 gx-5">
+                <p class='small text-muted'>
+                    <a href="/tratamiento_datos">Tratamiento de datos</a>
+                </p>
+                <p class='small text-muted'>
+                    <a href="/politica_envio">Política de envío</a>
+                </p>
+            </div>
+        </div>
     </footer>
-    
 
 
 </html>
