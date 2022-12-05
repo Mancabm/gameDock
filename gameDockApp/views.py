@@ -157,3 +157,6 @@ def log_out(request):
 
 def politica_envio(request):
     return render(request, "politica_envio.html")
+
+def contrarreembolso(request):
+  return render(request, 'contrareembolso.html')

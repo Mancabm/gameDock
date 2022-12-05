@@ -36,7 +36,8 @@ urlpatterns = [
     path('login', views.log_in),
     path('logout', views.log_out),
     path('register', views.register),
-    path('politica_envio', views.politica_envio)
+    path('politica_envio', views.politica_envio),
+    path('contrarreembolso', views.contrarreembolso),
 
 
 
