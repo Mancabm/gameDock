@@ -3,3 +3,5 @@ GameDock/__pycache__/
 gameDockApp/__pycache__/
 gameDockApp/migrations/__pycache__/
 gameDockApp/migrations/0*
+
+*.env
