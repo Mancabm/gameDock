@@ -31,9 +31,9 @@ def tratamiento_datos(request):
 def pedidos(request):
   pedidos = Pedido.objects.all()
   pedido = None
-  id_pedido = int(request.GET.get('id-pedido'))
+  id_pedido = request.GET.get('id-pedido', '0')
   if id_pedido:
-    pedido = [p for p in pedidos if p.pk == id_pedido][0]
+    pedido = [p for p in pedidos if p.ID_Seguiment() == id_pedido][0]
     return elegir_metodo_pago(request, pedido.pk)
   return render(request, 'pedidos.html')
 
@@ -82,7 +82,7 @@ def crear_nuevo_pedido(request):
             except:
                 mess = messages.add_message(request, level=0, message='Información inválida')
                 return render(request, 'pedido_form.html', {'formulario': formulario, 'messages':mess}) 
-            return redirect('/pedidos/{}'.format(pedido.id))
+            return redirect('/pedidos/?id-pedido={}'.format(pedido.ID_Seguiment()))
         else:
             mess = messages.add_message(request, level=0, message='Información inválida')
             return render(request, 'pedido_form.html', {'formulario': formulario, 'messages':mess})
