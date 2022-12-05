@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load bootstrap4 %}
+{% load crispy_forms_tags %}
 {% block contenido %}
     {% if messages %}
         <div class="alert alert-danger" role="alert">
@@ -11,7 +13,7 @@
     <div class="">
         <form method="POST" action=''>
             {% csrf_token %}
-            <table>{{formulario}}</table>
+            <table>{{formulario|crispy}}</table>
             <button type="submit" class='btn btn-primary'>Hacer pedido</button>
         </form>
     </div>
