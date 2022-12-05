@@ -149,3 +149,25 @@ BRAINTREE_CONF = {
   BRAINTREE_PUBLIC_KEY,
   BRAINTREE_PRIVATE_KEY
 }
+
+#Sending email
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend',
+EMAIL_HOST = 'smtp.gmail.com',
+EMAIL_PORT = 8000,
+EMAIL_HOST_USER = 'gamedock2@gmail.com',
+EMAIL_HOST_PASSWORD = 'gameDock34PGPI',
+EMAIL_USE_TLS = True,
+EMAIL_USE_SSL = False,
+
+EMAILS = [
+  {
+    EMAIL_BACKEND,
+    EMAIL_HOST,
+    EMAIL_PORT,
+    EMAIL_HOST_USER,
+    EMAIL_HOST_PASSWORD,
+    EMAIL_USE_TLS,
+    EMAIL_USE_SSL,
+  }
+]
