@@ -24,7 +24,7 @@
     
         <div class="row row-cols-1 row-cols-md-3 g-4">
             {% for producto in productos%}
-            <div class="col">
+            <div class="col  py-2">
                 <div class="card h-100">
                     <a href = "products/product/{{producto.id}}"><img src="{{MEDIA_URL}}{{producto.imagen}}" class="card-img-top" alt="product_image"></a>
                     <div class="card-body">
