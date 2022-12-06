@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
 import os
 import braintree
 
@@ -22,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-x0_%2$1r7#r0!+(!fm-5@!-$drzcuui!uy82=8#66!vk()&=s*'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -75,6 +76,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'GameDock.wsgi.application'
 
+PGCRYPTO_DEFAULT_CIPHER='aes'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -84,7 +86,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'gamedock',
         'USER': 'gamedock',
-        'PASSWORD': 'gameDock',
+        'PASSWORD': config('PASSWORD'),
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
