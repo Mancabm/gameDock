@@ -11,7 +11,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.core.mail import send_mail
+from django.core.mail import EmailMessage
 
 #muestra los títulos de los productos que están registrados
 def clientePrincipal(request):
@@ -160,11 +160,27 @@ def politica_envio(request):
     return render(request, "politica_envio.html")
 
 def contrarreembolso(request):
-  send_mail(
+  email_client(request)
+  return render(request, 'contrareembolso.html')
+
+def email_client(request):
+
+  #obtener name, email y message de los datos puestos por el cliente
+
+  mail = EmailMessage(
+    'Mensaje recibido',
+    'Sent by {} <{}>\n\n{}'.format(name,email,message),
+    email,
+    ['e52ad75676853e@inbox.mailtrap.io'],
+    reply_to=[email],
+  )
+
+  '''send_mail(
     subject = 'Test Mail',
     message = 'Kindly Ignore',
-    from_email = 'gamedock2@gmail.com',
-    recipient_list = ['jicastro1999@gmail.com',],
+    from_email = email,
+    recipient_list = ['e52ad75676853e@inbox.mailtrap.io',],
     fail_silently = False,
-  )
+  )'''
+
   return render(request, 'contrareembolso.html')

@@ -153,12 +153,14 @@ BRAINTREE_CONF = {
 }
 
 #Sending email
+#Via https://mailtrap.io/inboxes
+#Login with mail gamedock2@gmail.com password gameDock34PGPI
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend',
-EMAIL_HOST = 'smtp.gmail.com',
-EMAIL_PORT = 8000,
-EMAIL_HOST_USER = 'gamedock2@gmail.com',
-EMAIL_HOST_PASSWORD = 'gameDock34PGPI',
+EMAIL_HOST = 'smtp.mailtrap.io'
+EMAIL_HOST_USER = 'e52ad75676853e'
+EMAIL_HOST_PASSWORD = '1ebe1b81699490'
+EMAIL_PORT = '2525'
 EMAIL_USE_TLS = True,
 EMAIL_USE_SSL = False,
 
