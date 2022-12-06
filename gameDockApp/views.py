@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.conf import settings
-from gameDockApp.models import Producto
+from gameDockApp.models import Pedido, Producto
 from gameDockApp.models import Pedido
 from gameDockApp.models import Producto_Pedido
 from gameDockApp.carrito import Carrito
@@ -12,6 +12,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 import braintree
+from django.core.mail import send_mail
 
 #muestra los títulos de los productos que están registrados
 def clientePrincipal(request):
@@ -29,10 +30,18 @@ def productos_filtrados(request, id):
 def tratamiento_datos(request):
     return render(request,'tratamiento_datos.html')
 
+def pedidos(request):
+  pedidos = Pedido.objects.all()
+  pedido = None
+  id_pedido = request.GET.get('id-pedido', '0')
+  if id_pedido:
+    pedido = [p for p in pedidos if p.ID_Seguiment() == id_pedido][0]
+    return elegir_metodo_pago(request, pedido.pk)
+  return render(request, 'pedidos.html')
+
 def product_detail(request, id_producto):
     producto = get_object_or_404(Producto, pk=id_producto)
     return render(request, 'product_detail.html',{'producto': producto, 'MEDIA_URL': settings.MEDIA_URL})
-
 
 def agregar_producto(request, id_producto):
     carrito = Carrito(request)
@@ -72,8 +81,8 @@ def crear_nuevo_pedido(request):
                 pedido = crear_pedido(request, formulario)
             except:
                 mess = messages.add_message(request, level=0, message='Información inválida')
-                return render(request, 'pedido_form.html', {'formulario': formulario, 'messages':mess}) 
-            return redirect('/pedidos/{}'.format(pedido.id))
+                return render(request, 'pedido_form.html', {'formulario': formulario, 'messages':mess})
+            return redirect('/pedidos/?id-pedido={}'.format(pedido.ID_Seguiment()))
         else:
             mess = messages.add_message(request, level=0, message='Información inválida')
             return render(request, 'pedido_form.html', {'formulario': formulario, 'messages':mess})
@@ -189,3 +198,15 @@ def log_out(request):
     return redirect("Home")
 
 
+def politica_envio(request):
+    return render(request, "politica_envio.html")
+
+def contrarreembolso(request):
+  send_mail(
+    subject = 'Test Mail',
+    message = 'Kindly Ignore',
+    from_email = 'gamedock2@gmail.com',
+    recipient_list = ['jicastro1999@gmail.com',],
+    fail_silently = False,
+  )
+  return render(request, 'contrareembolso.html')

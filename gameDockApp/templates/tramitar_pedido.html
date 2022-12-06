@@ -1,27 +1,26 @@
 {% extends 'base.html' %}
 
 {% block contenido %}
-    <div class"col-md-5">
-        {% for dato in datos_pedido %}
-            <div class="card mb-3" style="max-width: 540px;">
-                <div class="row no-gutters">
-                <div class="col-md-4">
-                    <img src="{{MEDIA_URL}}{{dato.producto.imagen}}" class="card-img" alt="product_img">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                    <h5 class="card-title">{{dato.producto.nombre}}</h5>
-                    <p class="card-text">x{{dato.cantidad}}</p>
-                    <p class="card-text"><small class="text-muted">{{dato.producto.precio}}€</small></p>
-                    </div>
-                </div>
-                </div>
-            </div>
-        {% endfor %}
-            <b class = "card-text">Total: {{total}}€</b>
-            <h5 class = "card-text">MÉTODO DE PAGO:</h5>
-            <a href="#" class="btn btn-primary card-text">Contrarreembolso</a>
-            <a href="#" class="btn btn-primary card-text">Pago online</a>
+<div class"col-md-5">
+  {% for dato in datos_pedido %}
+  <div class="card mb-3" style="max-width: 540px;">
+    <div class="row no-gutters">
+      <div class="col-md-4">
+        <img src="{{MEDIA_URL}}{{dato.producto.imagen}}" class="card-img" alt="product_img">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title">{{dato.producto.nombre}}</h5>
+          <p class="card-text">x{{dato.cantidad}}</p>
+          <p class="card-text"><small class="text-muted">{{dato.producto.precio}}€</small></p>
+        </div>
+      </div>
     </div>
+  </div>
+  {% endfor %}
+  <b class="card-text">Total: {{total}}€</b>
+  <h5 class="card-text">MÉTODO DE PAGO:</h5>
+  <a href="/contrarreembolso" class="btn btn-primary card-text">Contrarreembolso</a>
+  <a href="#" class="btn btn-primary card-text">Pago online</a>
+</div>
 {% endblock %}
-

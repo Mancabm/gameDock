@@ -25,6 +25,7 @@ urlpatterns = [
 
     path('products/product/<int:id_producto>', views.product_detail),
     path('tratamiento_datos/', views.tratamiento_datos),
+    path('pedidos/', views.pedidos),
     path('producto/<int:id>/', views.productos_filtrados),
     path('products/product/<int:id_producto>', views.product_detail, name='Prod'),
     path('limpiar/', views.limpiar_carrito, name='Clear'),
@@ -37,7 +38,9 @@ urlpatterns = [
     path('payment/canceled', views.payment_canceled, name='Canceled'),
     path('login', views.log_in),
     path('logout', views.log_out),
-    path('register', views.register)
+    path('register', views.register),
+    path('politica_envio', views.politica_envio),
+    path('contrarreembolso', views.contrarreembolso),
 
 
 
