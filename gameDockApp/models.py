@@ -33,12 +33,21 @@ class Pedido(models.Model):
     direccion = models.TextField()
     email = models.EmailField()
     estado_pedido = models.IntegerField(choices=EstadoPedido.choices, default=EstadoPedido.EN_TIENDA)
+    pagado = models.BooleanField(default=False)
+    braintree_id = models.CharField(max_length=150, null=True)
 
     def ID_Seguiment(self)->str:
         return hashlib.sha256(str(self.id).encode('utf-8')).hexdigest()
 
     def __str__(self) -> str:
         return self.ID_Seguiment()
+    
+    def total_pedido(self):
+        total = 0
+        datos_pedido = Producto_Pedido.objects.filter(pedido=self)
+        for d in datos_pedido:
+            total += d.producto.precio * d.cantidad
+        return total
 
 
 class Producto_Pedido(models.Model):
