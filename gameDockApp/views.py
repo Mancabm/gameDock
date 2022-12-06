@@ -11,6 +11,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+import braintree
 from django.core.mail import EmailMessage
 
 #muestra los títulos de los productos que están registrados
@@ -66,11 +67,9 @@ def limpiar_carrito(request):
     return redirect("Home")
 
 def elegir_metodo_pago(request, id_pedido):
-    total = 0
     pedido = get_object_or_404(Pedido, pk=id_pedido)
     datos_pedido = Producto_Pedido.objects.filter(pedido=pedido)
-    for d in datos_pedido:
-        total += d.producto.precio * d.cantidad
+    total = pedido.total_pedido()
     
     return render(request, 'tramitar_pedido.html', {'datos_pedido': datos_pedido, 'pedido': pedido, 'total': total,'MEDIA_URL': settings.MEDIA_URL})
 
@@ -102,6 +101,8 @@ def crear_pedido(request, formulario):
     pedido.email =  formulario['email'].value()
     pedido.direccion = formulario['direccion'].value()
     pedido.estado_pedido = pedido.EstadoPedido.EN_TIENDA
+    pedido.pagado = False
+    pedido.braintree_id = None
     pedido.save()
     carrito = Carrito(request)
     for key, value in carrito.carrito.items():
@@ -110,6 +111,47 @@ def crear_pedido(request, formulario):
         nuevo_producto_pedido = Producto_Pedido(pedido=pedido, producto=producto, cantidad=value.get("cantidad"))
         nuevo_producto_pedido.save()
     return pedido
+
+##PEDIDO:
+gateway = braintree.BraintreeGateway(settings.BRAINTREE_CONF)
+
+def payment_process(request, id_pedido):
+    pedido = get_object_or_404(Pedido, pk=id_pedido)
+    coste = pedido.total_pedido()
+    if request.method == 'POST':
+        # retrieve nonce
+        nonce = request.POST.get('payment_method_nonce', None)
+        # create and submit transaction
+        result = gateway.transaction.sale({
+            'amount': f'{coste:.2f}',
+            'payment_method_nonce': nonce,
+            'options': {
+            'submit_for_settlement': True
+            }
+        })
+        if result.is_success:
+        # mark the order as paid
+            pedido.pagado = True
+            # store the unique transaction id
+            pedido.braintree_id = result.transaction.id
+            pedido.save()
+            return redirect('payment:done')
+        else:
+            return redirect('payment:canceled')
+    else:
+        # generate token
+        client_token = gateway.client_token.generate()
+        return render(request,
+            'payment/process.html',
+            {'pedido': pedido,
+            'client_token': client_token
+            })
+
+def payment_done(request):
+    return render(request, 'payment_done.html')
+
+def payment_canceled(request):
+    return render(request, 'payment_canceled.html')
 
 def register(request):
     if request.method == 'POST':
