@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 from decouple import config
 import os
+import braintree
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'gameDockApp',
-    'bootstrap5'
+    'bootstrap5',
+    'payment.apps.PaymentConfig',
 ]
 
 MIDDLEWARE = [
@@ -136,3 +138,37 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 MEDIA_URL = '/media/'
+
+#Braintree settings
+
+BRAINTREE_MERCHANT_ID = 'z77j3wt48srmvcgp'
+BRAINTREE_PUBLIC_KEY = 'd434n6k7z9cf5rx5'
+BRAINTREE_PRIVATE_KEY = '2a935f3ebec4a45890506490bf1f6cae'
+
+BRAINTREE_CONF = {
+  braintree.Environment.Sandbox,
+  BRAINTREE_MERCHANT_ID,
+  BRAINTREE_PUBLIC_KEY,
+  BRAINTREE_PRIVATE_KEY
+}
+
+#Sending email
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend',
+EMAIL_HOST = 'smtp.gmail.com',
+EMAIL_PORT = 8000,
+EMAIL_HOST_USER = 'gamedock2@gmail.com',
+EMAIL_HOST_PASSWORD = 'gameDock34PGPI',
+EMAIL_USE_TLS = True,
+EMAIL_USE_SSL = False,
+
+EMAILS = [
+  {
+    EMAIL_BACKEND,
+    EMAIL_HOST,
+    EMAIL_PORT,
+    EMAIL_HOST_USER,
+    EMAIL_HOST_PASSWORD,
+    EMAIL_USE_TLS,
+    EMAIL_USE_SSL,
+  }]

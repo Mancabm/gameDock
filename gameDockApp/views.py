@@ -11,6 +11,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+import braintree
+
+gateway = braintree.BraintreeGateway(settings.BRAINTREE_CONF)
 
 #muestra los títulos de los productos que están registrados
 def clientePrincipal(request):
@@ -65,13 +68,45 @@ def limpiar_carrito(request):
     return redirect("Home")
 
 def elegir_metodo_pago(request, id_pedido):
-    total = 0
     pedido = get_object_or_404(Pedido, pk=id_pedido)
     datos_pedido = Producto_Pedido.objects.filter(pedido=pedido)
-    for d in datos_pedido:
-        total += d.producto.precio * d.cantidad
-    
+    total = pedido.total_pedido()
+
     return render(request, 'tramitar_pedido.html', {'datos_pedido': datos_pedido, 'pedido': pedido, 'total': total,'MEDIA_URL': settings.MEDIA_URL})
+
+def pago_con_tarjeta(request, id_pedido):
+    pedido = get_object_or_404(Pedido, pk=id_pedido)
+    total = pedido.total_pedido()
+    if request.method == 'POST':
+        # retrieve nonce
+        nonce = request.POST.get('payment_method_nonce', None)
+        # create and submit transaction
+        result = gateway.transaction.sale({
+            'amount': f'{total:.2f}',
+            'payment_method_nonce': nonce,
+            'options': {
+                'submit_for_settlement': True
+             }
+        })
+        if result.is_success:
+            # mark the order as paid
+            pedido.pagado = True
+            # store the unique transaction id
+            pedido.braintree_id = result.transaction.id
+            pedido.save()
+            return redirect('payment/done')
+        else:
+            return redirect('payment/canceled')
+    else:
+        # generate token
+        client_token = gateway.client_token.generate
+        return render(request, 'payment_process.html', {'pedido': pedido, 'client_token': client_token})
+
+def payment_done(request):
+    return render(request, 'payment_done.html')
+
+def payment_canceled(request):
+    return render(request, 'payment_canceled.html')
 
 def crear_nuevo_pedido(request):
     if request.method == 'POST':
