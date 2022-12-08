@@ -209,6 +209,10 @@ def email_client(request):
 
   #obtener name, email y message de los datos puestos por el cliente
 
+  name = 'name'
+  email = 'jicastro1999@gmail.com'
+  message = 'Codigo pedido'
+
   mail = EmailMessage(
     'Mensaje recibido',
     'Sent by {} <{}>\n\n{}'.format(name,email,message),
