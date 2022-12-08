@@ -32,7 +32,7 @@ def pedidos(request):
   pedidos = Pedido.objects.all()
   pedido = None
   id_pedido = request.GET.get('id-pedido', '0')
-  if id_pedido:
+  if id_pedido!='0':
     pedido = [p for p in pedidos if p.ID_Seguiment() == id_pedido][0]
     return elegir_metodo_pago(request, pedido.pk)
   return render(request, 'pedidos.html')
