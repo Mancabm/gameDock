@@ -17,7 +17,7 @@
     </head>
     <body class="bg-light">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
-            <img src="{{MEDIA_URL}}/light-removebg-preview.png" alt="GameDock logo" height="65">
+            <img src="/media/gd-header.png" alt="GameDock logo" height="65">
             <a class="navbar-brand" href="/">GameDock
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,17 +36,20 @@
                         <a class="nav-link" href="/producto/2">Consolas</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link pr-5" href="/producto/3">Periféricos</a>
+                        <a class="nav-link" href="/producto/3">Periféricos</a>
                     </li>
+                    <li class="nav-item active">
+                        <a class="nav-link pr-5" href="/pedidos">Pedidos</a>
+                      </li>
                     <li class="px-5 pt-1">
                         <form method="get">
                           <input type="text" placeholder="Search..." name="busqueda">
-                          <button type="submit">Ok</button>
+                          <button type="submit" class="btn btn-outline-dark bg-primary pt-2">Ok</button>
                         </form>
                       </li>
                     {% if not user.is_authenticated %}
                         <li class="nav-item ml-auto">
-                            <a class="nav-link" href="/login">Inicia Sesión</a>
+                            <a class="nav-link pl-5" href="/login">Inicia Sesión</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/register">Registrarse</a>
@@ -129,13 +132,19 @@
     </body>
     <footer class="w-100 py-4 bg-dark flex-shrink-0">
         <div class="container py-3">
-            <div class="row gy-4 gx-5">
-                <p class='small text-muted'>
+            <div class="row  align-items-center">
+                <div class="col-5 pl-5">
+                <p class=' text-primary'>
+                    <a href="/">Inicio</a>
+                    <br>
                     <a href="/tratamiento_datos">Tratamiento de datos</a>
-                </p>
-                <p class='small text-muted'>
+                    <br>
                     <a href="/politica_envio">Política de envío</a>
                 </p>
+            </div>
+            <div class="col-7">
+                <img src="/media/gd-footer.png" alt="GameDock logo" height="110">
+            </div>
             </div>
         </div>
     </footer>
