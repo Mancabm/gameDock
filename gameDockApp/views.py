@@ -13,7 +13,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 import braintree
 
-gateway = braintree.BraintreeGateway(settings.BRAINTREE_CONF)
+
 
 #muestra los títulos de los productos que están registrados
 def clientePrincipal(request):
@@ -74,6 +74,8 @@ def elegir_metodo_pago(request, id_pedido):
 
     return render(request, 'tramitar_pedido.html', {'datos_pedido': datos_pedido, 'pedido': pedido, 'total': total,'MEDIA_URL': settings.MEDIA_URL})
 
+gateway = braintree.BraintreeGateway(settings.BRAINTREE_CONF)
+
 def pago_con_tarjeta(request, id_pedido):
     pedido = get_object_or_404(Pedido, pk=id_pedido)
     total = pedido.total_pedido()
@@ -94,12 +96,12 @@ def pago_con_tarjeta(request, id_pedido):
             # store the unique transaction id
             pedido.braintree_id = result.transaction.id
             pedido.save()
-            return redirect('payment/done')
+            return redirect('payment_done')
         else:
-            return redirect('payment/canceled')
+            return redirect('payment_canceled')
     else:
         # generate token
-        client_token = gateway.client_token.generate
+        client_token = gateway.client_token.generate()
         return render(request, 'payment_process.html', {'pedido': pedido, 'client_token': client_token})
 
 def payment_done(request):
