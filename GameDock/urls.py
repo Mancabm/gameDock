@@ -38,6 +38,7 @@ urlpatterns = [
     path('logout', views.log_out),
     path('register', views.register),
     path('politica_envio', views.politica_envio)
+    path('pedido_realizado', views.pedido_realizado)
 
 
 
