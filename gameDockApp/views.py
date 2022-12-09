@@ -210,5 +210,4 @@ def email_client(request):
     'Sent by {} <{}>\n\n{}'.format(name,email,message),
     email,
     ['e52ad75676853e@inbox.mailtrap.io'],
-    reply_to=[email],
   )
