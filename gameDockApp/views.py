@@ -192,3 +192,6 @@ def log_out(request):
 
 def politica_envio(request):
     return render(request, "politica_envio.html")
+
+def pedido_realizado(request):
+  return render(request, 'pedido_realizado.html')
