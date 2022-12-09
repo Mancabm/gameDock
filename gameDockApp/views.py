@@ -35,7 +35,7 @@ def tratamiento_datos(request):
 def pedidos(request):
   pedidos = Pedido.objects.all()
   pedido = None
-  id_pedido = request.GET.get('id-pedido', '0')
+  id_pedido = request.GET.get('id-pedido')
   if id_pedido:
     pedido = [p for p in pedidos if p.ID_Seguiment() == id_pedido][0]
     return elegir_metodo_pago(request, pedido.pk)
