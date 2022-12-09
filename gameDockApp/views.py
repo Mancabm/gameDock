@@ -96,18 +96,15 @@ def pago_con_tarjeta(request, id_pedido):
             # store the unique transaction id
             pedido.braintree_id = result.transaction.id
             pedido.save()
-            return redirect('payment_done')
+            return redirect('payment_done.html')
         else:
-            return redirect('payment_canceled')
+            return render(request, 'pago_cancelado.html')
     else:
         # generate token
         client_token = gateway.client_token.generate()
         return render(request, 'payment_process.html', {'pedido': pedido, 'client_token': client_token})
 
-def payment_done(request):
-    return render(request, 'payment_done.html')
-
-def payment_canceled(request):
+def pago_cancelado(request):
     return render(request, 'payment_canceled.html')
 
 def crear_nuevo_pedido(request):
