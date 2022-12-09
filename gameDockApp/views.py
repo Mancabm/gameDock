@@ -1,3 +1,4 @@
+from email.message import EmailMessage
 from django.shortcuts import render, get_object_or_404, redirect
 from django.conf import settings
 from gameDockApp.models import Pedido, Producto
@@ -194,4 +195,21 @@ def politica_envio(request):
     return render(request, "politica_envio.html")
 
 def pedido_realizado(request):
+  email_client(request)
   return render(request, 'pedido_realizado.html')
+
+def email_client(request):
+
+  #obtener name, email y message de los datos puestos por el cliente
+
+  name = Pedido.nombre
+  email = Pedido.email
+  message = Pedido.ID_Seguiment
+
+  mail = EmailMessage(
+    'Mensaje recibido',
+    'Sent by {} <{}>\n\n{}'.format(name,email,message),
+    email,
+    ['e52ad75676853e@inbox.mailtrap.io'],
+    reply_to=[email],
+  )
