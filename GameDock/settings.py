@@ -145,12 +145,12 @@ BRAINTREE_MERCHANT_ID = 'z77j3wt48srmvcgp'
 BRAINTREE_PUBLIC_KEY = 'd434n6k7z9cf5rx5'
 BRAINTREE_PRIVATE_KEY = '2a935f3ebec4a45890506490bf1f6cae'
 
-BRAINTREE_CONF = {
+BRAINTREE_CONF = braintree.Configuration(
   braintree.Environment.Sandbox,
   BRAINTREE_MERCHANT_ID,
   BRAINTREE_PUBLIC_KEY,
   BRAINTREE_PRIVATE_KEY
-}
+)
 
 #Sending email
 #Via https://mailtrap.io/inboxes
