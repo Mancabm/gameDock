@@ -1,4 +1,4 @@
-from email.message import EmailMessage
+from django.core.mail import send_mail
 from django.shortcuts import render, get_object_or_404, redirect
 from django.conf import settings
 from gameDockApp.models import Pedido, Producto
@@ -194,20 +194,21 @@ def politica_envio(request):
     return render(request, "politica_envio.html")
 
 def pedido_realizado(request):
-  email_client(request)
+  email_client()
   return render(request, 'pedido_realizado.html')
 
-def email_client(request):
+def email_client():
 
-  #obtener name, email y message de los datos puestos por el cliente
+  email_from = 'e52ad75676853e@inbox.mailtrap.io'
+  email_to = str(Pedido.email)
 
-  name = Pedido.nombre
-  email = Pedido.email
-  message = Pedido.ID_Seguiment
-
-  mail = EmailMessage(
-    'Mensaje recibido',
-    'Sent by {} <{}>\n\n{}'.format(name,email,message),
-    email,
-    ['e52ad75676853e@inbox.mailtrap.io'],
+  name = str(Pedido.nombre)
+  id_seguimiento = str(Pedido.ID_Seguiment)
+  
+  send_mail(
+    'Pedido realizado con éxito en Game Dock: ' + name,
+    'Puedes ver el progreso de tu pedido en la sección de pedidos de nuestra web buscando el ID de seguimiento: ' + id_seguimiento,
+    email_from,
+    [email_to],
+    fail_silently=False,
   )
