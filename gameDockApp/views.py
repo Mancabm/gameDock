@@ -194,10 +194,10 @@ def politica_envio(request):
     return render(request, "politica_envio.html")
 
 def pedido_realizado(request):
-  email_client()
+  sending_mail_to_client()
   return render(request, 'pedido_realizado.html')
 
-def email_client():
+def sending_mail_to_client():
 
   email_from = 'e52ad75676853e@inbox.mailtrap.io'
   email_to = str(Pedido.email)
@@ -205,10 +205,4 @@ def email_client():
   name = str(Pedido.nombre)
   id_seguimiento = str(Pedido.ID_Seguiment)
   
-  send_mail(
-    'Pedido realizado con éxito en Game Dock: ' + name,
-    'Puedes ver el progreso de tu pedido en la sección de pedidos de nuestra web buscando el ID de seguimiento: ' + id_seguimiento,
-    email_from,
-    [email_to],
-    fail_silently=False,
-  )
+  send_mail('Pedido realizado con éxito en Game Dock: ' + name, 'Puedes ver el progreso de tu pedido en la sección de pedidos de nuestra web buscando el ID de seguimiento: ' + id_seguimiento, email_from, [email_to], fail_silently=False)
