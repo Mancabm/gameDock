@@ -197,18 +197,18 @@ def pedido_realizado(request):
 
   id_seguimiento = request.GET.get('id-seguimiento')
 
-  sending_mail_to_client(id_seguimiento)
-  return render(request, 'pedido_realizado.html')
-
-def sending_mail_to_client(id_seguimiento):
-
-  email_from = 'gamedock2@gmail.com'
-
   pedidos = Pedido.objects.all()
   pedido = [p for p in pedidos if p.ID_Seguiment() == id_seguimiento][0]
 
+  sending_mail_to_client(pedido)
+  return render(request, 'pedido_realizado.html', {'pedido':pedido})
+
+def sending_mail_to_client(pedido):
+
   name = pedido.nombre
+  email_from = 'gamedock2@gmail.com'
   email_to = pedido.email
+  id_seguimiento = pedido.ID_Seguiment()
   
   send_mail(
     'Pedido realizado con éxito en Game Dock: ' + name,
