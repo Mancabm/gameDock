@@ -5,23 +5,34 @@
 {%endblock%}
 
 {% block estilos%}
+    a {
+        color: inherit; /* blue colors for links too */
+        text-decoration: inherit; /* no underline */
+    }
+
+    .card-img-top {
+        width: 100%;
+        height: 30vw;
+        object-fit: contain;
+
+    }
+
 {% endblock  %}
 
 
 {% block contenido %}
-{% comment %} falta un if q segun el tipo devuelva productos de tipo 1, 2 o 3 {% endcomment %}
-
-    {% for producto in productos%}
+    
         <div class="row row-cols-1 row-cols-md-3 g-4">
-            <div class="col">
+            {% for producto in productos%}
+            <div class="col  py-2">
                 <div class="card h-100">
-                    <img src="{{MEDIA_URL}}{{producto.imagen}}" class="card-img-top" alt="product_image">
+                    <a href = "products/product/{{producto.id}}"><img src="{{MEDIA_URL}}{{producto.imagen}}" class="card-img-top" alt="product_image"></a>
                     <div class="card-body">
-                        <h5 class = "card-title">{{producto.nombre}}</h5>
+                        <h5 class = "card-title"><a href = "products/product/{{producto.id}}">{{producto.nombre}}</a></h5>
                         <p class = "card-text">Precio: {{producto.precio}}€</p>
                     </div>
                 </div>
             </div>
+            {% endfor %}
         </div>
-    {% endfor %}
 {% endblock  %}

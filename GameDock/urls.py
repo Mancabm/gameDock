@@ -25,12 +25,23 @@ urlpatterns = [
 
     path('products/product/<int:id_producto>', views.product_detail),
     path('tratamiento_datos/', views.tratamiento_datos),
+    path('pedidos/', views.pedidos),
     path('producto/<int:id>/', views.productos_filtrados),
     path('products/product/<int:id_producto>', views.product_detail, name='Prod'),
     path('limpiar/', views.limpiar_carrito, name='Clear'),
     path('agregar/<int:id_producto>', views.agregar_producto, name='Add'),
     path('decrementar/<int:id_producto>', views.decrementar_producto, name='Dec'),
     path('new/pedido', views.elegir_metodo_pago, name='Process'),
+    path('pedidos/new', views.crear_nuevo_pedido, name='Init_Process'),
+    path('pedidos/<int:id_pedido>', views.elegir_metodo_pago, name='DetallePedido'),
+    path('pedidos/pago/<int:id_pedido>', views.pago_con_tarjeta, name='PagoPedido'),
+    path('pedido_cancelado/', views.pago_cancelado),
+    path('login', views.log_in),
+    path('logout', views.log_out),
+    path('register', views.register),
+    path('politica_envio', views.politica_envio),
+    path('pedido_realizado/', views.pedido_realizado),
+
 
 
 
