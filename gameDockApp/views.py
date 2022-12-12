@@ -32,15 +32,6 @@ def productos_filtrados(request, id):
 def tratamiento_datos(request):
     return render(request,'tratamiento_datos.html')
 
-def pedidos(request):
-  pedidos = Pedido.objects.all()
-  pedido = None
-  id_pedido = request.GET.get('id-pedido')
-  if id_pedido:
-    pedido = [p for p in pedidos if p.ID_Seguiment() == id_pedido][0]
-    return elegir_metodo_pago(request, pedido.pk)
-  return render(request, 'pedidos.html')
-
 def product_detail(request, id_producto):
     producto = get_object_or_404(Producto, pk=id_producto)
     return render(request, 'product_detail.html',{'producto': producto, 'MEDIA_URL': settings.MEDIA_URL})
@@ -217,3 +208,23 @@ def sending_mail_to_client(pedido):
     [email_to],
     fail_silently=False
     )
+
+def seguimiento_pedido(request, pedido):
+  datos_pedido = Producto_Pedido.objects.filter(pedido=pedido)
+  total = pedido.total_pedido()
+  estado_pedido = str(pedido.estado_pedido)
+  
+  return render(request, 'seguimiento_pedido.html', {'datos_pedido': datos_pedido, 'pedido': pedido, 'total': total, 'estado_pedido':estado_pedido, 'MEDIA_URL': settings.MEDIA_URL})
+
+def pedidos(request):
+  pedidos = Pedido.objects.all()
+  pedido = None
+  busqueda = request.GET.get('busqueda')
+  id_pedido = request.GET.get('id-pedido')
+  if busqueda:
+    pedido = [p for p in pedidos if p.ID_Seguiment() == busqueda][0]
+    return seguimiento_pedido(request, pedido)
+  if id_pedido:
+    pedido = [p for p in pedidos if p.ID_Seguiment() == id_pedido][0]
+    return elegir_metodo_pago(request, pedido.pk)
+  return render(request, 'pedidos.html')
