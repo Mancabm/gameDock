@@ -1,3 +1,4 @@
+from django.core.mail import send_mail
 from django.shortcuts import render, get_object_or_404, redirect
 from django.conf import settings
 from gameDockApp.models import Pedido, Producto
@@ -11,6 +12,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+import braintree
+
+
 
 #muestra los títulos de los productos que están registrados
 def clientePrincipal(request):
@@ -28,14 +32,7 @@ def productos_filtrados(request, id):
 def tratamiento_datos(request):
     return render(request,'tratamiento_datos.html')
 
-def pedidos(request):
-  pedidos = Pedido.objects.all()
-  pedido = None
-  id_pedido = request.GET.get('id-pedido', '0')
-  if id_pedido!='0':
-    pedido = [p for p in pedidos if p.ID_Seguiment() == id_pedido][0]
-    return elegir_metodo_pago(request, pedido.pk)
-  return render(request, 'pedidos.html')
+
 
 def product_detail(request, id_producto):
     producto = get_object_or_404(Producto, pk=id_producto)
@@ -65,13 +62,44 @@ def limpiar_carrito(request):
     return redirect("Home")
 
 def elegir_metodo_pago(request, id_pedido):
-    total = 0
     pedido = get_object_or_404(Pedido, pk=id_pedido)
     datos_pedido = Producto_Pedido.objects.filter(pedido=pedido)
-    for d in datos_pedido:
-        total += d.producto.precio * d.cantidad
-    
+    total = pedido.total_pedido()
+
     return render(request, 'tramitar_pedido.html', {'datos_pedido': datos_pedido, 'pedido': pedido, 'total': total,'MEDIA_URL': settings.MEDIA_URL})
+
+gateway = braintree.BraintreeGateway(settings.BRAINTREE_CONF)
+
+def pago_con_tarjeta(request, id_pedido):
+    pedido = get_object_or_404(Pedido, pk=id_pedido)
+    total = pedido.total_pedido()
+    if request.method == 'POST':
+        # retrieve nonce
+        nonce = request.POST.get('payment_method_nonce', None)
+        # create and submit transaction
+        result = gateway.transaction.sale({
+            'amount': f'{total:.2f}',
+            'payment_method_nonce': nonce,
+            'options': {
+                'submit_for_settlement': True
+             }
+        })
+        if result.is_success:
+            # mark the order as paid
+            pedido.pagado = True
+            # store the unique transaction id
+            pedido.braintree_id = result.transaction.id
+            pedido.save()
+            return redirect('payment_done.html')
+        else:
+            return render(request, 'pago_cancelado.html')
+    else:
+        # generate token
+        client_token = gateway.client_token.generate()
+        return render(request, 'payment_process.html', {'pedido': pedido, 'client_token': client_token})
+
+def pago_cancelado(request):
+    return render(request, 'payment_canceled.html')
 
 def crear_nuevo_pedido(request):
     if request.method == 'POST':
@@ -154,6 +182,51 @@ def log_out(request):
     logout(request)
     return redirect("Home")
 
-
 def politica_envio(request):
     return render(request, "politica_envio.html")
+
+def pedido_realizado(request):
+
+  id_seguimiento = request.GET.get('id-seguimiento')
+
+  pedidos = Pedido.objects.all()
+  pedido = [p for p in pedidos if p.ID_Seguiment() == id_seguimiento][0]
+
+  sending_mail_to_client(pedido)
+  return render(request, 'pedido_realizado.html', {'pedido':pedido})
+
+def sending_mail_to_client(pedido):
+
+  name = pedido.nombre
+  email_from = 'gamedock2@gmail.com'
+  email_to = pedido.email
+  id_seguimiento = pedido.ID_Seguiment()
+  
+  send_mail(
+    'Pedido realizado con éxito en Game Dock: ' + name,
+    'Puedes ver el progreso de tu pedido en la sección de pedidos de nuestra web buscando el ID de seguimiento: ' + id_seguimiento,
+    email_from,
+    [email_to],
+    fail_silently=False
+    )
+
+def seguimiento_pedido(request, pedido):
+  datos_pedido = Producto_Pedido.objects.filter(pedido=pedido)
+  total = pedido.total_pedido()
+  estado_pedido = str(pedido.estado_pedido)
+  
+  return render(request, 'seguimiento_pedido.html', {'datos_pedido': datos_pedido, 'pedido': pedido, 'total': total, 'estado_pedido':estado_pedido, 'MEDIA_URL': settings.MEDIA_URL})
+
+def pedidos(request):
+  pedidos = Pedido.objects.all()
+  pedido = None
+  busqueda = request.GET.get('busqueda')
+  id_pedido = request.GET.get('id-pedido')
+  if busqueda:
+    pedido = [p for p in pedidos if p.ID_Seguiment() == busqueda][0]
+    return seguimiento_pedido(request, pedido)
+  if id_pedido:
+    pedido = [p for p in pedidos if p.ID_Seguiment() == id_pedido][0]
+    return elegir_metodo_pago(request, pedido.pk)
+  return render(request, 'pedidos.html')
+
