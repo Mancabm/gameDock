@@ -6,3 +6,5 @@ django-bootstrap4
 django-crispy-forms
 python-decouple==3.6
 django-pgcrypto==2.0.0
+braintree==3.59.0
+

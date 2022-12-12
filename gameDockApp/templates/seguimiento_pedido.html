@@ -19,9 +19,8 @@
   </div>
   {% endfor %}
   <b class="card-text">Total: {{total}}€</b>
-  <h5 class="card-text">MÉTODO DE PAGO:</h5>
-  <a href="/pedido_realizado/?id-seguimiento={{pedido.ID_Seguiment}}"
-    class="btn btn-primary card-text">Contrarreembolso</a>
-  <a href="{% url 'PagoPedido' pedido.id %}" class="btn btn-primary card-text">Pago online</a>
+  <div>
+    <p>ESTADO DE PEDIDO: {{estado_pedido}}</p>
+  </div>
 </div>
 {% endblock %}

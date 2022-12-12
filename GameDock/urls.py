@@ -33,10 +33,13 @@ urlpatterns = [
     path('decrementar/<int:id_producto>', views.decrementar_producto, name='Dec'),
     path('pedidos/new', views.crear_nuevo_pedido, name='Init_Process'),
     path('pedidos/<int:id_pedido>', views.elegir_metodo_pago, name='DetallePedido'),
+    path('pedidos/pago/<int:id_pedido>', views.pago_con_tarjeta, name='PagoPedido'),
+    path('pedido_cancelado/', views.pago_cancelado),
     path('login', views.log_in),
     path('logout', views.log_out),
     path('register', views.register),
-    path('politica_envio', views.politica_envio)
+    path('politica_envio', views.politica_envio),
+    path('pedido_realizado/', views.pedido_realizado),
 
 
 
