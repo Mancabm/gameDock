@@ -1,0 +1,14 @@
+from python:3.10-alpine
+
+RUN apk add --no-cache git 
+
+WORKDIR /app
+
+RUN pip install --upgrade pip
+
+RUN git clone https://github.com/Mancabm/gameDock.git .
+RUN pip install -r requirements.txt
+
+ADD docker_settings.py /app/GameDock/settings.py
+
+COPY .env GameDock/.env
