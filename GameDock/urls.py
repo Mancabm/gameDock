@@ -15,7 +15,30 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls.static import static
+from django.conf import settings
+from gameDockApp import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-]
+    path('', views.clientePrincipal, name='Home'),
+
+    path('products/product/<int:id_producto>', views.product_detail),
+    path('tratamiento_datos/', views.tratamiento_datos),
+    path('pedidos/', views.pedidos),
+    path('producto/<int:id>/', views.productos_filtrados),
+    path('products/product/<int:id_producto>', views.product_detail, name='Prod'),
+    path('limpiar/', views.limpiar_carrito, name='Clear'),
+    path('agregar/<int:id_producto>', views.agregar_producto, name='Add'),
+    path('decrementar/<int:id_producto>', views.decrementar_producto, name='Dec'),
+    path('pedidos/new', views.crear_nuevo_pedido, name='Init_Process'),
+    path('pedidos/<int:id_pedido>', views.elegir_metodo_pago, name='DetallePedido'),
+    path('login', views.log_in),
+    path('logout', views.log_out),
+    path('register', views.register),
+    path('politica_envio', views.politica_envio)
+
+
+
+
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

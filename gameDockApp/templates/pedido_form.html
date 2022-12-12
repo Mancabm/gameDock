@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% load bootstrap4 %}
+{% load crispy_forms_tags %}
+{% block contenido %}
+    {% if messages %}
+        <div class="alert alert-danger" role="alert">
+            {% for message in messages %}
+                <p> {{message}} </p>
+            {% endfor %}
+        </div>
+    {% endif %}
+    <div class="">
+        <form method="POST" action=''>
+            {% csrf_token %}
+            <table>{{formulario|crispy}}</table>
+            <button type="submit" class='btn btn-primary'>Hacer pedido</button>
+        </form>
+    </div>
+{% endblock %}
