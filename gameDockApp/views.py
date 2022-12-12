@@ -32,6 +32,8 @@ def productos_filtrados(request, id):
 def tratamiento_datos(request):
     return render(request,'tratamiento_datos.html')
 
+
+
 def product_detail(request, id_producto):
     producto = get_object_or_404(Producto, pk=id_producto)
     return render(request, 'product_detail.html',{'producto': producto, 'MEDIA_URL': settings.MEDIA_URL})
@@ -180,7 +182,6 @@ def log_out(request):
     logout(request)
     return redirect("Home")
 
-
 def politica_envio(request):
     return render(request, "politica_envio.html")
 
@@ -228,3 +229,4 @@ def pedidos(request):
     pedido = [p for p in pedidos if p.ID_Seguiment() == id_pedido][0]
     return elegir_metodo_pago(request, pedido.pk)
   return render(request, 'pedidos.html')
+
