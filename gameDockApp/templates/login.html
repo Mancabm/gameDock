@@ -3,7 +3,20 @@
     <title>Inicio Sesión</title>
     <head>
         <meta charset='utf-8'>
-        {% load bootstrap5 %}
+        <style type="text/css">
+            .abs-center {
+                padding-top: 100px;
+                display: flex;
+                justify-content: center;
+                min-height: 100vh;
+              }
+              
+            .form {
+                width: 450px;
+            }
+        </style>            
+        {% load bootstrap4 %}
+        {% load crispy_forms_tags %}
         {% bootstrap_css %}
     </head>
     <body>
@@ -14,16 +27,16 @@
                 {% endfor %}
             </div>
         {% endif %}
-        <div class="">
-            <form method="POST" action=''>
+        <div class="abs-center">
+            <form class="form" method="POST" action=''>
                 {% csrf_token %}
-                <table>{{formulario}}</table>
-                <button type="submit" class='btn btn-primary'>Inicia Sesión</button>
+                <table>{{formulario|crispy}}</table>
+                <button type="submit" class='btn btn-primary'>Iniciar Sesión</button>
             </form>
         </div>
         <div>
             No registrado:
-            <a href="/register">registrate</a>
+            <a href="/register">Registrate aqui</a>
         </div>
     </body>
 </html>
