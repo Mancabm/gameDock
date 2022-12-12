@@ -4,4 +4,4 @@ gameDockApp/__pycache__/
 gameDockApp/migrations/__pycache__/
 gameDockApp/migrations/0*
 
-*.env
+*GameDock/.env
