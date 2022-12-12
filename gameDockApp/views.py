@@ -221,7 +221,6 @@ def pedidos(request):
   pedidos = Pedido.objects.all()
   pedido = None
   busqueda = request.GET.get('busqueda')
-  busqueda = busqueda
   id_pedido = request.GET.get('id-pedido')
   if busqueda:
     pedido = [p for p in pedidos if p.ID_Seguiment() == busqueda.strip()][0]
