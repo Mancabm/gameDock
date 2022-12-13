@@ -26,7 +26,7 @@
             {% for producto in productos%}
             <div class="col  py-2">
                 <div class="card h-100">
-                    <a href = "products/product/{{producto.id}}"><img src="{{MEDIA_URL}}{{producto.imagen}}" class="card-img-top" alt="product_image"></a>
+                    <a href = "/products/product/{{producto.id}}"><img src="{{MEDIA_URL}}{{producto.imagen}}" class="card-img-top" alt="product_image"></a>
                     <div class="card-body">
                         <h5 class = "card-title"><a href = "products/product/{{producto.id}}">{{producto.nombre}}</a></h5>
                         <p class = "card-text">Precio: {{producto.precio}}€</p>
