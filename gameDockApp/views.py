@@ -1,7 +1,7 @@
 from django.core.mail import send_mail
 from django.shortcuts import render, get_object_or_404, redirect
 from django.conf import settings
-from gameDockApp.models import Pedido, Producto
+from gameDockApp.models import Producto
 from gameDockApp.models import Pedido
 from gameDockApp.models import Producto_Pedido
 from gameDockApp.carrito import Carrito
@@ -223,7 +223,7 @@ def pedidos(request):
   busqueda = request.GET.get('busqueda')
   id_pedido = request.GET.get('id-pedido')
   if busqueda:
-    pedido = [p for p in pedidos if p.ID_Seguiment() == busqueda][0]
+    pedido = [p for p in pedidos if p.ID_Seguiment() == busqueda.strip()][0]
     return seguimiento_pedido(request, pedido)
   if id_pedido:
     pedido = [p for p in pedidos if p.ID_Seguiment() == id_pedido][0]

@@ -54,6 +54,5 @@ class Producto_Pedido(models.Model):
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
     cantidad = models.IntegerField(help_text="Cantidad del producto comprado")
 
-
     def __str__(self) -> str:
         return str(self.carrito) + " "+ str(self.producto)
