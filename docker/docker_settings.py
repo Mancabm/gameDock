@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 from decouple import config
 import os
+import braintree
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,7 +28,8 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+CSRF_TRUSTED_ORIGINS = ['https://gamedock.azurewebsites.net']
+ALLOWED_HOSTS = ['gamedock.azurewebsites.net', 'localhost']
 
 
 # Application definition
@@ -40,8 +42,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'gameDockApp',
-    'bootstrap5'
+    'payment.apps.PaymentConfig',
+    'bootstrap4', 
+    'crispy_forms'
+
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -75,9 +82,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'GameDock.wsgi.application'
 
 PGCRYPTO_DEFAULT_CIPHER='aes'
-
-# Database
-# https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
     'default': {
@@ -126,6 +130,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [BASE_DIR / 'static']
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -136,3 +141,40 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 MEDIA_URL = '/media/'
+
+#Braintree settings
+
+BRAINTREE_MERCHANT_ID = 'z77j3wt48srmvcgp'
+BRAINTREE_PUBLIC_KEY = 'd434n6k7z9cf5rx5'
+BRAINTREE_PRIVATE_KEY = '2a935f3ebec4a45890506490bf1f6cae'
+
+BRAINTREE_CONF = braintree.Configuration(
+  braintree.Environment.Sandbox,
+  BRAINTREE_MERCHANT_ID,
+  BRAINTREE_PUBLIC_KEY,
+  BRAINTREE_PRIVATE_KEY
+)
+
+#Sending email
+#Via https://mailtrap.io/inboxes
+#Login with mail gamedock2@gmail.com password gameDock34PGPI
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.mailtrap.io'
+EMAIL_HOST_USER = 'e52ad75676853e'
+EMAIL_HOST_PASSWORD = '1ebe1b81699490'
+EMAIL_PORT = '2525'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+
+EMAILS = [
+  {
+    EMAIL_BACKEND,
+    EMAIL_HOST,
+    EMAIL_PORT,
+    EMAIL_HOST_USER,
+    EMAIL_HOST_PASSWORD,
+    EMAIL_USE_TLS,
+    EMAIL_USE_SSL,
+  }
+]

@@ -12,3 +12,5 @@ RUN pip install -r requirements.txt
 ADD docker_settings.py /app/GameDock/settings.py
 
 COPY .env GameDock/.env
+
+CMD ash -c "python3 manage.py makemigrations && python3 manage.py migrate && python3 manage.py loaddata initial_data.json && python3 manage.py runserver 0.0.0.0:8080"

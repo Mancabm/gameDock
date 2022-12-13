@@ -4,16 +4,15 @@ services:
   db:
     image: postgres:14.6-alpine
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      - postgres_data:/home/manuel/volumes/postgres
     environment:
       - POSTGRES_PASSWORD=gameDock
   web:
-    build: .
+    image: gamedock.azurecr.io/gamedocke-web:2.0
     ports:
-      - "8080:80"
-    command: ash -c "python3 manage.py makemigrations && python3 manage.py migrate && python3 manage.py loaddata initial_data.json && python3 manage.py runserver 0.0.0.0:8080"
+      - "8080:8080"
     volumes:
-      - .:/code  
+      - /home/manuel/volumes/gamedock
     depends_on:
       - db
 
