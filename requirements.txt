@@ -3,6 +3,7 @@ psycopg2-binary==2.9.5
 Whoosh==2.7.4
 Pillow==9.3.0
 django-bootstrap4
+django-bootstrap5
 django-crispy-forms
 python-decouple==3.6
 django-pgcrypto==2.0.0
